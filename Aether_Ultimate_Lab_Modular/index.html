@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aether Ultimate Lab v4.0 // Quantum Research Facility</title>
+
+  <!-- Typography & Cybernetic Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Core External CDN Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+  <!-- ============================================================
+       TIER 1: PRESENTATION & INTERFACE STYLESHEETS
+       ============================================================ -->
+  <link rel="stylesheet" href="tier1/css/theme.css">
+  <link rel="stylesheet" href="tier1/css/station1.css">
+  <link rel="stylesheet" href="tier1/css/station2.css">
+  <link rel="stylesheet" href="tier1/css/stations_3_10.css">
+  <link rel="stylesheet" href="tier1/css/chardonnay.css">
+  <link rel="stylesheet" href="tier1/css/bank_terminal.css">
+</head>
+<body>
+
+<!-- WebGL Background Engine -->
+<canvas id="webgl-canvas"></canvas>
+
+<!-- CRT Overlay -->
+<div class="crt-overlay"></div>
+
+<!-- Hyperspace Wormhole Light Transition & Spatial Warp Flash Overlay -->
+<div id="wormhole-flash-overlay"></div>
+
+<!-- Master UI Layer -->
+<div id="ui-layer">
+
+  <!-- Top Global Header -->
+  <header class="top-header interactive">
+    <div class="brand-group">
+      <div class="brand-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          <path d="M2 12h20"></path>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">AETHER</div>
+        <div class="brand-sub">ULTIMATE RESEARCH LABORATORY // ENGINE 4.0</div>
+      </div>
+    </div>
+
+    <!-- Active Station Indicator (Aether Lab Skeleton) -->
+    <div class="header-center-station" id="header-active-station" style="display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-cyan); background: rgba(0, 240, 255, 0.08); padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(0, 240, 255, 0.2);">
+      <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan); display: inline-block;"></span>
+      <span id="station-indicator-label">STATION 01 // QUANTUM GATEWAY ACCESS</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <button id="btn-header-clean-view" onclick="toggleCleanView()" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.25); color: #94a3b8; font-family: 'Space Grotesk', sans-serif; font-size: 10px; font-weight: 700; padding: 6px 14px; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.25s ease;">
+        <span>⛶</span>
+        <span id="header-clean-label">CLEAN VIEW [C]</span>
+      </button>
+      <div class="security-status-badge">
+        <div class="status-dot" id="auth-status-dot"></div>
+        <span id="auth-status-text">SECURITY: RESTRICTED // CLEARANCE REQUIRED</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Slide Stage Viewport -->
+  <main class="slide-container">
+
+        <!-- SLIDE 1: GATEWAY & 360° ROTATABLE VIP BLACK CARD -->
+    <div class="slide-panel active" id="slide-1">
+      <div class="gatekeeper-wrapper">
+        
+        <!-- LEFT PANEL: 6 COLUMNS (Authentication Mainframe) -->
+        <div class="gatekeeper-col-left">
+          
+          <!-- Top-Left Bright Hero Heading & Ultimate Lab Icon -->
+          <div class="s1-hero-brand">
+            <div class="s1-brand-tag">
+              <span class="badge-pulse-dot"></span>
+              <span>AETHER COGNITIVE DYNAMICS // QUANTUM LAB v4.0</span>
+            </div>
+            <div class="s1-heading-row">
+              <div class="s1-lab-icon-badge" title="Aether Ultimate Lab Core">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00EEFF" stroke-width="2">
+                  <path d="M10 2v7.31L4.62 18.5A2 2 0 0 0 6.36 21.5h11.28a2 2 0 0 0 1.74-3L14 9.31V2"></path>
+                  <line x1="8.5" y1="2" x2="15.5" y2="2"></line>
+                  <circle cx="12" cy="15" r="2" fill="#00EEFF" opacity="0.85"></circle>
+                </svg>
+              </div>
+              <h1 class="s1-main-heading">
+                WELCOME TO THE <span class="glow-cyan-text">ULTIMATE LAB</span>
+              </h1>
+            </div>
+            <p class="s1-hero-sub">Unified WebGL Research Clusters &bull; Relativistic Physics Engine &bull; Deep Cosmic Observatory</p>
+          </div>
+
+          <!-- Bottom-Left Quantum Gateway Terminal Box -->
+          <div class="terminal-box interactive">
+            <!-- Aerospace Corner Precision Marks -->
+            <div class="terminal-corner-mark top-left">+</div>
+            <div class="terminal-corner-mark top-right">+</div>
+            <div class="terminal-corner-mark bottom-left">+</div>
+            <div class="terminal-corner-mark bottom-right">+</div>
+
+            <!-- Top Ethereal Laser Header Strip -->
+            <div class="terminal-top-strip">
+              <div class="terminal-badge">
+                <span class="badge-pulse-dot"></span>
+                <span>NODE 01 // QUANTUM GATEWAY INTERFACE</span>
+              </div>
+              <div class="terminal-clearance-pill">SECURITY CLEARANCE: LEVEL 5</div>
+            </div>
+
+            <!-- Heading Tier -->
+            <div class="terminal-title-block">
+              <h2 class="terminal-title">LAB ACCESS // <span class="title-highlight">AUTHENTICATION</span></h2>
+              <div class="terminal-subline">RESTRICTED RESEARCH MAINFRAME &bull; POST-QUANTUM CRYPTOGRAPHIC KEYWAY</div>
+            </div>
+
+            <!-- Directive Description (2 Lines per White Paper Rules) -->
+            <p class="terminal-desc">Authorized personnel only. Supply cryptographic compound pass to de-isolate WebGL unified research clusters &amp; kinetic physics manifolds.</p>
+
+            <!-- Status Telemetry HUD Ribbon (4-Column System) -->
+            <div class="terminal-status-ribbon">
+              <div class="ribbon-item">
+                <span class="ribbon-lbl">CORE STATUS</span>
+                <span class="ribbon-val" style="color: #00EEFF;">STANDBY // GATED</span>
+              </div>
+              <div class="ribbon-divider"></div>
+              <div class="ribbon-item">
+                <span class="ribbon-lbl">LATTICE</span>
+                <span class="ribbon-val">SHA-512 MATRIX</span>
+              </div>
+              <div class="ribbon-divider"></div>
+              <div class="ribbon-item">
+                <span class="ribbon-lbl">CIPHER TYPE</span>
+                <span class="ribbon-val" style="color: #FFC107;">MOLECULAR PASS</span>
+              </div>
+              <div class="ribbon-divider"></div>
+              <div class="ribbon-item">
+                <span class="ribbon-lbl">ZERO-TRUST</span>
+                <span class="ribbon-val" style="color: #00FF9A;">ENGAGED</span>
+              </div>
+            </div>
+
+            <!-- High-Tech Holographic Input Chamber -->
+            <div class="portal-input-chamber">
+              <div class="chamber-bracket top-left">&#9484;</div>
+              <div class="chamber-bracket top-right">&#9488;</div>
+              <div class="chamber-bracket bottom-left">&#9492;</div>
+              <div class="chamber-bracket bottom-right">&#9496;</div>
+              <div class="chamber-laser-scanner"></div>
+
+              <div class="chamber-inner-row">
+                <div class="input-prefix-tag">
+                  <span class="prefix-glyph">&gt;&gt;</span>
+                  <span class="prefix-text">CIPHER://</span>
+                </div>
+                <input type="text" class="terminal-input" id="console-pass-input" placeholder="ENTER CRYPTOGRAPHIC COMPOUND..." autocomplete="off" spellcheck="false">
+                <div class="compound-hint-pill" id="btn-compound-hint" title="Cryptographic Molecular Clue: Hexavalent Chromium [Cr(VI)]">
+                  <span class="hint-glyph">&#11041;</span>
+                  <span class="hint-text">DECRYPT</span>
+                </div>
+              </div>
+
+              <!-- Dynamic Input Buffer Integrity Track -->
+              <div class="input-entropy-track">
+                <div class="entropy-label-row">
+                  <span id="entropy-status-text">KEY BUFFER: WAITING INPUT</span>
+                  <span id="entropy-hash-text">0x0000_LOCKED</span>
+                </div>
+                <div class="entropy-bar-track">
+                  <div class="entropy-bar-fill" id="entropy-fill"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Holographic Command Authorization Button -->
+            <button class="terminal-btn" id="console-submit-btn">
+              <div class="btn-glow-sweep"></div>
+              <div class="btn-content-inner">
+                <svg class="btn-lock-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <span class="btn-label-text">AUTHENTICATE &amp; INITIALIZE LAB</span>
+                <svg class="btn-chevron-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="13 17 18 12 13 7"></polyline>
+                  <polyline points="6 17 11 12 6 7"></polyline>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Security Denial Banner -->
+            <div class="denial-banner" id="denial-banner">
+              <div class="denial-inner-content">
+                <span class="denial-icon">&#9888;</span>
+                <span class="denial-text">&gt;&gt; ACCESS DENIED: INVALID CRYPTOGRAPHIC COMPOUND // CLEARANCE REQUIRED &lt;&lt;</span>
+              </div>
+            </div>
+
+            <!-- Bottom Cryptographic Micro-Vitals Grid (3 Columns) -->
+            <div class="terminal-vitals-grid">
+              <div class="vital-cell">
+                <span class="vital-cell-lbl">ENCRYPTION PROTOCOL</span>
+                <span class="vital-cell-val">2048-BIT POST-QUANTUM</span>
+              </div>
+              <div class="vital-cell">
+                <span class="vital-cell-lbl">GATEWAY INTEGRITY</span>
+                <span class="vital-cell-val" style="color: #00FF9A;">SECURE // ISOLATED</span>
+              </div>
+              <div class="vital-cell">
+                <span class="vital-cell-lbl">CLUSTER LATENCY</span>
+                <span class="vital-cell-val" id="gw-latency-val" style="color: #00EEFF;">8.2 ms</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CENTER PANEL: 2 COLUMNS (Holographic 3D Quantum Lattice Sphere Nexus) -->
+        <div class="gatekeeper-col-center interactive">
+          <div class="quantum-nexus-container">
+            <!-- Aerospace Precision Marks -->
+            <div class="nexus-corner-mark top-left">+</div>
+            <div class="nexus-corner-mark top-right">+</div>
+            <div class="nexus-corner-mark bottom-left">+</div>
+            <div class="nexus-corner-mark bottom-right">+</div>
+
+            <div class="nexus-header-tag">
+              <span class="nexus-pulse-dot"></span>
+              <span>QUANTUM LATTICE LINK</span>
+            </div>
+
+            <!-- 3D Interactive Canvas -->
+            <div class="nexus-canvas-wrapper">
+              <canvas id="quantum-sphere-canvas" width="220" height="220"></canvas>
+              <div class="nexus-reticle-ring"></div>
+              <div class="nexus-reticle-ring inner"></div>
+            </div>
+
+            <div class="nexus-telemetry-badge">
+              <span class="nexus-stat-lbl">NEURAL BRIDGE:</span>
+              <span class="nexus-stat-val">100% COHERENT</span>
+            </div>
+
+            <div class="nexus-flow-strip">
+              <span class="nexus-flow-arrow">&lsaquo;&lsaquo; AUTH</span>
+              <span class="nexus-flow-node">&bull;&bull;&bull;</span>
+              <span class="nexus-flow-arrow">TOKEN &rsaquo;&rsaquo;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT PANEL: 4 COLUMNS (Aether Lab Express Card + Executive VIP Dossier) -->
+        <div class="gatekeeper-col-right">
+          
+          <!-- 360° Rotatable Aether Lab Express Diamond Crystal Centurion Card -->
+          <div class="card-stage-wrap interactive">
+            <div class="card-3d-scene" id="card-scene">
+              <div class="card-3d-rotor" id="card-rotor">
+                
+                <!-- Front Face: Diamond Shining Crystal Amex -->
+                <div class="card-face card-front">
+                  <div class="amex-guilloche-border"></div>
+                  
+                  <!-- Ancient Wise Serpent Watermark Medallion -->
+                  <div class="amex-centurion-watermark">
+                    <svg width="136" height="136" viewBox="0 0 120 120" fill="none">
+                      <circle cx="60" cy="60" r="54" stroke="rgba(255,255,255,0.25)" stroke-width="1.2" stroke-dasharray="4,4"/>
+                      <circle cx="60" cy="60" r="48" stroke="rgba(200,240,255,0.45)" stroke-width="1.5"/>
+                      <circle cx="60" cy="60" r="42" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+                      <circle cx="60" cy="8" r="2.5" fill="rgba(255,255,255,0.9)"/>
+                      <circle cx="60" cy="112" r="2.5" fill="rgba(255,255,255,0.9)"/>
+                      <circle cx="8" cy="60" r="2.5" fill="rgba(255,255,255,0.9)"/>
+                      <circle cx="112" cy="60" r="2.5" fill="rgba(255,255,255,0.9)"/>
+                      <path d="M60 22 C78 22 92 34 92 50 C92 64 78 72 66 78 C52 84 38 90 38 100 C38 106 44 110 52 110 C62 110 70 104 74 96 C78 88 88 84 94 90 C100 96 98 106 90 114 C78 122 62 122 48 116 C34 110 26 98 26 84 C26 70 40 62 52 56 C66 50 80 44 80 34 C80 28 72 26 62 26 C50 26 40 32 36 40 L26 34 C32 24 46 22 60 22 Z" 
+                            fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.85)" stroke-width="1.8"/>
+                      <path d="M58 24 L62 30 M68 26 L70 32 M76 30 L76 36 M82 38 L78 42 M84 46 L78 48 M82 54 L76 54 M76 60 L70 58 M70 66 L64 62 M62 70 L58 66 M54 74 L50 70 M46 78 L44 72 M40 84 L42 78" 
+                            stroke="rgba(180,240,255,0.65)" stroke-width="1.2"/>
+                      <path d="M26 34 C24 30 26 24 30 20 C34 16 42 16 46 20 C42 22 36 24 32 28 Z" fill="rgba(255,255,255,0.4)" stroke="rgba(255,255,255,0.95)" stroke-width="1.5"/>
+                      <path d="M30 18 L32 12 L35 16 L38 10 L41 16 L44 12 L46 18 Z" fill="rgba(255,255,255,0.7)" stroke="rgba(200,240,255,0.95)" stroke-width="1.2"/>
+                      <circle cx="34" cy="23" r="1.8" fill="#00EEFF"/>
+                      <path d="M25 32 L19 35 L15 33 M19 35 L16 38" stroke="rgba(255,255,255,0.75)" stroke-width="1.2" fill="none"/>
+                    </svg>
+                  </div>
+
+                  <!-- Exact Header from White Paper: AETHER LAB EXPRESS // KINETIC SERPENT -->
+                  <div class="amex-top-banner">
+                    <span class="amex-title-text">AETHER LAB EXPRESS</span>
+                    <span class="amex-tier-pill">KINETIC SERPENT</span>
+                  </div>
+
+                  <div class="chip-and-nfc">
+                    <div class="emv-chip-diamond"></div>
+                    <div class="amex-front-cid">CID: &bull;&bull;&bull;&bull;</div>
+                    <svg class="nfc-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" style="width:24px; height:24px; opacity:0.9;">
+                      <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                      <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                      <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                      <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                    </svg>
+                  </div>
+
+                  <div class="card-number-amex">3790 &bull;&bull;&bull;&bull;&bull;&bull; &bull;&bull;9931</div>
+
+                  <div class="card-bottom-amex">
+                    <div class="card-holder-info">
+                      <div class="card-member-since">MEMBER SINCE -- // EXP &infin;</div>
+                      <div class="card-holder-name-amex">UNKNOWN USER // CLEARANCE &Omega;</div>
+                    </div>
+
+                    <!-- Secret Card Passcode Input -->
+                    <div class="card-pin-terminal-diamond">
+                      <input type="password" class="card-pin-input-diamond" id="card-pass-input" placeholder="CIPHER PIN..." autocomplete="off">
+                      <button class="card-pin-btn-diamond" id="card-submit-btn">ENTER</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Back Face: Frosted Diamond Crystal -->
+                <div class="card-face card-back">
+                  <div class="crystal-mag-stripe"></div>
+                  <div class="signature-bar-wrap">
+                    <div class="signature-strip">UNKNOWN USER // AUTHORIZED</div>
+                    <div class="cvv-box">
+                      <span style="font-size: 8pt; color: #A0B0C0;">CVC</span>
+                      <span class="cvc-masked-dots">&bull;&bull;&bull;&bull;</span>
+                    </div>
+                  </div>
+                  <div class="back-legal">
+                    PROPERTY OF AETHER COSMIC RESEARCH INITIATIVE. AUTHORIZED EXECUTIVE ACCESS ONLY.
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Card 360° Rotational Controls -->
+            <div class="card-control-bar">
+              <button class="card-pill-btn" id="btn-flip-card">FLIP CARD (180&deg;)</button>
+              <button class="card-pill-btn" id="btn-auto-rotate">AUTO-ROTATE 360&deg;</button>
+              <button class="card-pill-btn" id="btn-reset-card">RESET VIEW</button>
+            </div>
+          </div>
+
+          <!-- Bottom-Right Executive VIP Telemetry Dossier & Credential Artifact -->
+          <div class="card-dossier-panel interactive">
+            <div class="dossier-header-row">
+              <div class="dossier-tag">
+                <span class="dossier-dot"></span>
+                <span>EXECUTIVE CREDENTIAL DOSSIER // VIP TOKEN</span>
+              </div>
+              <span class="dossier-badge">TIER: OMEGA // RESEARCH</span>
+            </div>
+            
+            <div class="dossier-title">CENTURION RESEARCH CLEARANCE PROTOCOL</div>
+            
+            <div class="dossier-specs-grid">
+              <div class="dossier-spec-item">
+                <span class="spec-lbl">SECURITY CLASS</span>
+                <span class="spec-val">LEVEL 5 EXECUTIVE</span>
+              </div>
+              <div class="dossier-spec-item">
+                <span class="spec-lbl">CRYPTO TOKEN</span>
+                <span class="spec-val">3790-SERPENT-HEX</span>
+              </div>
+              <div class="dossier-spec-item">
+                <span class="spec-lbl">CARD MATERIAL</span>
+                <span class="spec-val">CRYSTALLINE</span>
+              </div>
+              <div class="dossier-spec-item">
+                <span class="spec-lbl">BIOMETRIC CIPHER</span>
+                <span class="spec-val" style="color: #00FF9A;">LATTICE VERIFIED</span>
+              </div>
+            </div>
+
+            <p class="dossier-quote">&ldquo;Bearer holds unrestricted clearance to all WebGL unified physics clusters, relativistic singularity conduits, and executive research manifolds across stations 01 through 10.&rdquo;</p>
+            
+            <div class="dossier-status-strip">
+              <span>HARDWARE HEARTBEAT: <b style="color: #00FF9A;">OPTIMAL</b></span>
+              <span><span id="dossier-rot-axis">360&deg; ROTATIONAL AXIS</span>: <b style="color: #00EEFF;">ACTIVE</b></span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+            <!-- SLIDE 2: EXPLORE THE UNIVERSE & SOLAR SYSTEM DUAL-BAR SYSTEM -->
+    <div class="slide-panel" id="slide-2">
+      
+
+      <div class="cosmic-hud-container interactive">
+        <div class="cosmic-header-telemetry">
+          <div class="cosmic-domain-title" id="cosmic-domain-title">THE OBSERVABLE UNIVERSE</div>
+          <div class="cosmic-domain-sub" id="cosmic-domain-sub">COSMIC MICROWAVE HORIZON // 10^26 METERS</div>
+        </div>
+
+        <!-- BAR 1: COSMIC MACRO SCALE BAR (10^26 m -> 10^11 m) -->
+        <div class="cosmic-slider-panel" id="cosmic-macro-panel">
+          <button class="hud-bar-minimize-btn" id="btn-min-macro" title="Hide Bar for Clean Cinematic View">✕</button>
+          
+          <div class="cosmic-telemetry-row">
+            <span>SPATIAL SCALE: <span class="cosmic-telemetry-val" id="telemetry-scale">10^26 m</span></span>
+            <span>LIGHT-TRANSIT DISTANCE: <span class="cosmic-telemetry-val" id="telemetry-distance">93.0 BILLION LY</span></span>
+            <span>SPECTRAL REDSHIFT: <span class="cosmic-telemetry-val" id="telemetry-redshift">z = 1100</span></span>
+          </div>
+
+          <input type="range" min="0" max="1000" value="0" class="range-slider" id="zoom-slider">
+
+          <div class="stage-jump-pills">
+            <div class="jump-pill active" data-zoom="0">1. CMB Horizon</div>
+            <div class="jump-pill" data-zoom="250">2. Cosmic Web</div>
+            <div class="jump-pill" data-zoom="500">3. Laniakea</div>
+            <div class="jump-pill" data-zoom="750">4. Milky Way</div>
+            <div class="jump-pill" data-zoom="1000" style="border-color: var(--accent-gold); color: #fff;">5. Enter Solar System ➔</div>
+          </div>
+        </div>
+
+        <!-- BAR 2: EXTENDED SOLAR SYSTEM PLANETARY EXPLORER BAR -->
+        <div class="solar-explorer-panel" id="solar-explorer-panel">
+          <button class="hud-bar-minimize-btn" id="btn-min-solar" title="Hide Bar for Clean Cinematic View">✕</button>
+
+          <div class="solar-nav-row">
+            <button class="cosmic-nav-btn" id="btn-return-cosmic">⟵ RETURN TO COSMIC SCALE (10²⁶ m)</button>
+            <div class="cosmic-sub-badge">SOLAR SYSTEM SYSTEMIC EXPLORER // ORION SPUR</div>
+            <button class="cosmic-nav-btn btn-trigger-sol" id="btn-focus-sol" title="Lock View Directly to Sol Star Center">☀️ FOCUS SOL (STAR)</button>
+            <button class="cosmic-nav-btn" id="btn-toggle-diagram" title="Open Celestial Atlas & Cosmic Blueprint">📐 CELESTIAL ATLAS &amp; ORBITAL BLUEPRINT</button>
+          </div>
+
+          <div class="cosmic-telemetry-row">
+            <span>BODY: <span class="cosmic-telemetry-val" id="planet-name">THE SUN // SOL (G2V YELLOW DWARF)</span></span>
+            <span>ORBITAL DISTANCE: <span class="cosmic-telemetry-val" id="planet-dist">0.000 AU (0 KM)</span></span>
+            <span>ORBITAL SPEED: <span class="cosmic-telemetry-val" id="planet-vel">220 KM/S (SAGITTARIUS A* ORBIT)</span></span>
+            <span>DIAMETER: <span class="cosmic-telemetry-val" id="planet-diam">1,392,700 KM (109 × EARTH)</span></span>
+            <span>ATMOSPHERE: <span class="cosmic-telemetry-val" id="planet-atmos">H 73.5% · He 24.8% · PLASMA (5,778 K)</span></span>
+          </div>
+
+          <!-- Extended Panoramic Planetary Slider (Defaults directly to the Sun after Milky Way) -->
+          <input type="range" min="0" max="2000" value="0" class="planet-range-slider" id="planet-slider">
+
+          <!-- 9 Planetary Jump Stations -->
+          <div class="stage-jump-pills">
+            <div class="planet-jump-pill planet-jump-pill-sol active" data-pzoom="0">☀️ Sol</div>
+            <div class="planet-jump-pill" data-pzoom="250">☿ Mercury</div>
+            <div class="planet-jump-pill" data-pzoom="500">♀ Venus</div>
+            <div class="planet-jump-pill planet-jump-pill pill-earth" data-pzoom="750">♁ Earth &amp; Moon</div>
+            <div class="planet-jump-pill" data-pzoom="1000">♂ Mars</div>
+            <div class="planet-jump-pill" data-pzoom="1250">♃ Jupiter</div>
+            <div class="planet-jump-pill" data-pzoom="1500">♄ Saturn</div>
+            <div class="planet-jump-pill" data-pzoom="1750">♅ Uranus</div>
+            <div class="planet-jump-pill" data-pzoom="2000">♆ Neptune</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<!-- SLIDE 3: LAB 1 - SHADERS & LIGHTING -->
+    <div class="slide-panel" id="slide-3">
+      <div class="lab-layout">
+        <!-- Control Panel (Left) -->
+        <div class="lab-control-panel interactive">
+          <div class="lab-tag">LAB 01 // GPU LIGHTING &amp; MATERIALS</div>
+          <h2 class="lab-title">Physically Based Shading</h2>
+          <p style="font-size: 8.5pt; color: var(--text-muted); line-height: 1.4;">Real-time Cook-Torrance microfacet BRDF simulation with metallic and specular reflectance control.</p>
+
+          <div class="control-group">
+            <div class="control-label"><span>SURFACE ROUGHNESS</span><span id="rough-val">0.20</span></div>
+            <input type="range" min="0" max="100" value="20" class="range-slider" id="roughness-slider">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>METALLIC FRACTION</span><span id="metal-val">0.90</span></div>
+            <input type="range" min="0" max="100" value="90" class="range-slider" id="metalness-slider">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>CLEARCOAT GLOSS</span><span id="coat-val">0.80</span></div>
+            <input type="range" min="0" max="100" value="80" class="range-slider" id="clearcoat-slider">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>SHADER VIEWPORT MODE</span></div>
+            <div class="btn-row">
+              <button class="toggle-btn active" id="btn-pbr">PBR SOLID</button>
+              <button class="toggle-btn" id="btn-wire">WIREFRAME</button>
+              <button class="toggle-btn" id="btn-norm">NORMALS</button>
+              <button class="toggle-btn" id="btn-gold">IMPERIAL GOLD</button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>KEY LIGHT TINT</span></div>
+            <div class="btn-row">
+              <button class="toggle-btn active" id="light-cyan">CYAN</button>
+              <button class="toggle-btn" id="light-amber">AMBER</button>
+              <button class="toggle-btn" id="light-violet">VIOLET</button>
+              <button class="toggle-btn" id="light-white">WHITE</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Qualities & Core Engineering Architecture (Right) -->
+                <!-- Centerpiece Stage (The Hero - Camera Viewfinder) -->
+        <main class="station-centerpiece-stage">
+          <div class="centerpiece-reticle">
+            <div class="reticle-corner-tl"></div>
+            <div class="reticle-corner-tr"></div>
+            <div class="reticle-corner-bl"></div>
+            <div class="reticle-corner-br"></div>
+            <div class="reticle-top-info">
+              <span>FRESNEL F₀: 0.04 - 1.00</span>
+              <span>SHADING: GGX MICROFACET</span>
+            </div>
+            <div class="reticle-bottom-info">
+              <span>CONSERVATION OF ENERGY: ENFORCED</span>
+              <span>ACES FILMIC TONE MAPPING</span>
+            </div>
+          </div>
+        </main>
+        <div class="info-briefing-panel interactive">
+          <div class="info-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            PROJECT QUALITIES // ADVANCED GRAPHICS ENGINE
+          </div>
+          <h3 class="info-title">Core Engineering Capabilities</h3>
+          <p class="info-concept">
+            Unlike standard web applications with flat CSS styling, this project integrates a full <strong>Cook-Torrance Microfacet BRDF Pipeline</strong> running directly on the GPU at 60 FPS, calculating real-time microfacet scattering, metallic Fresnel conductance, and dynamic clearcoat lacquer reflections.
+          </p>
+
+          <div class="info-metric-card">
+            <div><span class="info-pill-tag">ROUGHNESS PHYSICS</span>Simulates microscopic surface facet normal scattering without static image textures.</div>
+            <div style="margin-top: 6px;"><span class="info-pill-tag">METALLIC CONDUCTION</span>Evaluates complex dielectric vs conductor Fresnel reflectance equations dynamically.</div>
+            <div style="margin-top: 6px;"><span class="info-pill-tag">CLEARCOAT DUAL-PASS</span>Computes a secondary specular lacquer coating for luxury automotive finish.</div>
+          </div>
+
+          <p class="info-concept" style="font-size: 8pt;">
+            <strong>Project Technical Benchmark:</strong> Employs the identical shader architecture utilized by Apple, Tesla, and Porsche digital showrooms for zero-latency interactive product visualization.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: LAB 2 - PARTICLE PHYSICS & COMPUTE -->
+    <div class="slide-panel" id="slide-4">
+      <div class="lab-layout">
+        <!-- Control Panel (Left) -->
+        <div class="lab-control-panel interactive">
+          <div class="lab-tag">LAB 02 // COMPUTE &amp; INSTANCED PHYSICS</div>
+          <h2 class="lab-title">Particle Dynamics &amp; Budget</h2>
+          <p style="font-size: 8.5pt; color: var(--text-muted); line-height: 1.4;">Real-time GPU buffer integration calculating 50,000 particle vectors under dynamic force fields.</p>
+
+          <div class="control-group">
+            <div class="control-label"><span>ACTIVE PARTICLES</span><span id="part-count-val">30,000</span></div>
+            <input type="range" min="1000" max="50000" step="1000" value="30000" class="range-slider" id="particle-slider">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>FORCE FIELD MODE</span></div>
+            <div class="btn-row">
+              <button class="toggle-btn active" id="btn-vortex">VORTEX CYCLONE</button>
+              <button class="toggle-btn" id="btn-gravity">GRAVITY WELL</button>
+              <button class="toggle-btn" id="btn-repulse">REPULSE</button>
+              <button class="toggle-btn" id="btn-chaos">QUANTUM CHAOS</button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>SIMULATION SPEED</span><span id="part-speed-val">1.0x</span></div>
+            <input type="range" min="2" max="30" value="10" class="range-slider" id="particle-speed-slider">
+          </div>
+
+          <div style="padding: 12px; background: rgba(0,0,0,0.5); border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 8pt; color: var(--accent-cyan); line-height: 1.6;">
+            GPU DRAW CALLS: 1 (INSTANCED BATCH)<br>
+            BUFFER MEMORY: <span id="part-mem-val">2.88 MB</span><br>
+            BLENDING: ADDITIVE (PHOTON GLOW)
+          </div>
+        </div>
+
+        <!-- Architecture & Theory Briefing Box (Right) -->
+                <!-- Centerpiece Stage (The Hero - Camera Viewfinder) -->
+        <main class="station-centerpiece-stage">
+          <div class="centerpiece-reticle">
+            <div class="reticle-corner-tl"></div>
+            <div class="reticle-corner-tr"></div>
+            <div class="reticle-corner-bl"></div>
+            <div class="reticle-corner-br"></div>
+            <div class="reticle-top-info">
+              <span>INSTANCED PARTICLES: 12,000 ACTIVE</span>
+              <span>SOLVER: VERLET INTEGRATION</span>
+            </div>
+            <div class="reticle-bottom-info">
+              <span>GPU DRAW CALLS: 1</span>
+              <span>MEMORY BANDWIDTH: 3.2 MB/s</span>
+            </div>
+          </div>
+        </main>
+        <div class="info-briefing-panel interactive">
+          <div class="info-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            PROJECT QUALITIES // LAB 02 CAPABILITIES
+          </div>
+          <h3 class="info-title">Core Engineering Capabilities</h3>
+          <p class="info-concept">
+            If you created 50,000 HTML <code>&lt;div&gt;</code> elements or standard 3D meshes, your browser would crash or freeze at 1 FPS. This lab demonstrates <strong>Hardware Instanced Batching</strong>.
+          </p>
+
+          <div class="info-metric-card">
+            <div><span class="info-pill-tag">BATCHING</span>All 50,000 particles are rendered in exactly <strong>1 single GPU draw call</strong>.</div>
+            <div style="margin-top: 6px;"><span class="info-pill-tag">VRAM ARRAYS</span>Coordinates live in a typed <code>Float32Array</code> buffer allocated once in graphics memory.</div>
+            <div style="margin-top: 6px;"><span class="info-pill-tag">FORCES</span>Calculates orbital angular momentum, Newton inverse-square gravity, and kinetic drag each frame.</div>
+          </div>
+
+          <p class="info-concept" style="font-size: 8pt;">
+            <strong>Real-World Web Impact:</strong> This architecture powers high-frequency cryptocurrency financial visualizers, NASA flight orbital simulations, and interactive WebGL canvas landing pages.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: LAB 3 - AUDIO SYNTHESIZER & REAL-TIME FFT -->
+    <div class="slide-panel" id="slide-5">
+      <div class="lab-layout">
+        <!-- Control Panel (Left) -->
+        <div class="lab-control-panel interactive">
+          <div class="lab-tag">LAB 03 // WEB AUDIO SYNTHESIS &amp; FFT</div>
+          <h2 class="lab-title">Audio-Reactive Mesh Core</h2>
+          <p style="font-size: 8.5pt; color: var(--text-muted); line-height: 1.4;">Native Web Audio API procedural synthesis modulating 3D vertex positions and emissive glows via live FFT frequency analysis.</p>
+
+          <div class="control-group">
+            <div class="control-label"><span>PLAYABLE SYNTH CHORDS</span></div>
+            <div class="btn-row">
+              <button class="toggle-btn" id="synth-cmin">C MINOR (432Hz)</button>
+              <button class="toggle-btn" id="synth-fsharp">F# SOLFEGGIO (528Hz)</button>
+              <button class="toggle-btn" id="synth-subbass">SUB-BASS (60Hz)</button>
+              <button class="toggle-btn" id="synth-ethereal">ETHEREAL (864Hz)</button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>OSCILLATOR WAVEFORM</span></div>
+            <div class="btn-row">
+              <button class="toggle-btn active" id="wave-sine">SINE</button>
+              <button class="toggle-btn" id="wave-triangle">TRIANGLE</button>
+              <button class="toggle-btn" id="wave-saw">SAWTOOTH</button>
+            </div>
+          </div>
+
+          <div class="control-group" style="margin-top: 8px;">
+            <div class="control-label"><span>WAVEFORM GEOMETRY MONITOR</span><span id="wave-type-label" style="color: var(--accent-cyan); font-weight: 700; font-family: monospace;">SINE // HARMONIC WAVE</span></div>
+            <canvas id="audio-wave-canvas" width="280" height="64" style="width: 100%; height: 64px; background: rgba(5, 12, 24, 0.75); border: 1px solid rgba(0, 240, 255, 0.35); border-radius: 6px; box-shadow: inset 0 0 12px rgba(0, 240, 255, 0.12); display: block; margin-top: 4px;"></canvas>
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>BASS REACTION INTENSITY</span><span id="bass-intensity-val">2.0x</span></div>
+            <input type="range" min="5" max="50" value="20" class="range-slider" id="bass-slider">
+          </div>
+        </div>
+
+        <!-- Project Qualities & Core Engineering Architecture (Right) -->
+                <!-- Centerpiece Stage (The Hero - Camera Viewfinder) -->
+        <main class="station-centerpiece-stage">
+          <div class="centerpiece-reticle">
+            <div class="reticle-corner-tl"></div>
+            <div class="reticle-corner-tr"></div>
+            <div class="reticle-corner-bl"></div>
+            <div class="reticle-corner-br"></div>
+            <div class="reticle-top-info">
+              <span>AUDIO CONTEXT: 48,000 Hz</span>
+              <span>HARMONIC RESONATOR: ACTIVE</span>
+            </div>
+            <div class="reticle-bottom-info">
+              <span>FFT SIZE: 64 BINS</span>
+              <span>SPECTRUM ORBIT: 360° CYLINDRICAL</span>
+            </div>
+          </div>
+        </main>
+        <div class="info-briefing-panel interactive">
+          <div class="info-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            PROJECT QUALITIES // REAL-TIME AUDIO DSP
+          </div>
+          <h3 class="info-title">Core Engineering Capabilities</h3>
+          <p class="info-concept">
+            This project features a 100% self-contained <strong>Procedural Web Audio Synthesizer &amp; DSP Graph</strong>. It generates mathematical sound waves in real time and links acoustic frequency bands directly to 3D geometry deformation.
+          </p>
+
+          <div class="info-metric-card">
+            <div><span class="info-pill-tag">ZERO ASSET AUDIO</span>Audio is computed mathematically from oscillator functions without downloading external audio files.</div>
+            <div style="margin-top: 6px;"><span class="info-pill-tag">FFT DECOMPOSITION</span>Hardware-accelerated Fast Fourier Transform separates audio into 64 discrete frequency bins.</div>
+            <div style="margin-top: 6px;"><span class="info-pill-tag">AUDIO-VISUAL BRIDGE</span>Sub-bass frequencies (20-100Hz) dynamically modulate 3D mesh scale and vertex normals at 60 FPS.</div>
+          </div>
+
+          <p class="info-concept" style="font-size: 8pt;">
+            <strong>Project Technical Benchmark:</strong> Implements the same sub-millisecond DSP architecture powering professional web DAWs and streaming spatial audio visualizers.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: LAB 4 - DOM & MICRO-INTERACTIONS -->
+    <div class="slide-panel" id="slide-6">
+      <div class="lab-layout">
+        <!-- Control Panel (Left) -->
+        <div class="lab-control-panel interactive">
+          <div class="lab-tag">LAB 04 // DOM &amp; MICRO-INTERACTIONS</div>
+          <h2 class="lab-title">Optical Glassmorphism</h2>
+          <p style="font-size: 8.5pt; color: var(--text-muted); line-height: 1.4;">Live sub-pixel backdrop blur filters, specular highlights, and magnetic spring physics cursor traps.</p>
+
+          <div class="control-group">
+            <div class="control-label"><span>BACKDROP BLUR</span><span id="blur-val">24px</span></div>
+            <input type="range" min="0" max="50" value="24" class="range-slider" id="blur-slider">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>BORDER OPACITY</span><span id="border-val">0.25</span></div>
+            <input type="range" min="0" max="100" value="25" class="range-slider" id="border-slider">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>GLASS TINT SPECTRUM</span></div>
+            <div class="btn-row">
+              <button class="toggle-btn active" id="tint-cyan">CYAN FROST</button>
+              <button class="toggle-btn" id="tint-emerald">EMERALD</button>
+              <button class="toggle-btn" id="tint-amber">AMBER</button>
+              <button class="toggle-btn" id="tint-violet">VIOLET</button>
+            </div>
+          </div>
+
+          <div class="glass-preview-box" id="glass-target">
+            <div style="font-weight: 700; font-size: 8.5pt; letter-spacing: 0.12em; color: var(--accent-cyan); margin-bottom: 8px;">OPTICAL APERTURE &amp; SPRING TRAP</div>
+            <div style="margin: 10px 0 14px 0;">
+              <button class="magnetic-btn" id="magnetic-test-btn">DRAG / FLICK SPRING CURSOR</button>
+            </div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; color: var(--text-muted); display: flex; justify-content: space-around;">
+              <span>DISP: <b id="spring-pos-disp" style="color:#ffffff;">0px</b></span>
+              <span>VEL: <b id="spring-vel-disp" style="color:var(--accent-cyan);">0.0</b></span>
+              <span>STATUS: <b id="spring-status-disp" style="color:var(--accent-emerald);">REST</b></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Optical Glass HUD Loupe (Looking Directly into 3D Gyroscope) -->
+        <div class="glass-center-lens" id="glass-lens-overlay">
+          <div class="lens-content">
+            <div class="lens-tag">REFRACTIVE STAGE // CENTRAL OPTICAL LENS</div>
+            <div class="lens-metric">LIVE GAUSSIAN BLUR: <span id="lens-blur-val">24px</span> · CAUSTIC TRANSMISSION: <span id="lens-trans-val">94.2%</span></div>
+          </div>
+        </div>
+
+        <!-- Project Qualities & Core Engineering Architecture (Right) -->
+                <!-- Centerpiece Stage (The Hero - Camera Viewfinder) -->
+        <main class="station-centerpiece-stage">
+          <div class="centerpiece-reticle">
+            <div class="reticle-corner-tl"></div>
+            <div class="reticle-corner-tr"></div>
+            <div class="reticle-corner-bl"></div>
+            <div class="reticle-corner-br"></div>
+            <div class="reticle-top-info">
+              <span>REFRACTIVE INDEX: η = 1.520</span>
+              <span>ABBE DISPERSION: V_d = 58.6</span>
+            </div>
+            <div class="reticle-bottom-info">
+              <span>MULTI-AXIS GIMBAL PRECESSION</span>
+              <span>INTERNAL TOTAL REFLECTION: 41.1°</span>
+            </div>
+          </div>
+        </main>
+        <div class="info-briefing-panel interactive">
+          <div class="info-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            PROJECT QUALITIES // GPU COMPOSITOR ACCELERATION
+          </div>
+          <h3 class="info-title">Core Engineering Capabilities</h3>
+          <p class="info-concept">
+            This project harnesses the <strong>Browser GPU Compositor Thread</strong> to execute multi-pass sub-pixel Gaussian backdrop blurs behind dynamic 3D scenes while running continuous Hooke's Law Newtonian spring physics.
+          </p>
+
+          <div class="info-metric-card">
+            <div><span class="info-pill-tag">COMPOSITOR ISOLATION</span>Hardware-accelerated texture caching enables live 3D objects to blur in real time with 0 dropped frames.</div>
+            <div style="margin-top: 6px;"><span class="info-pill-tag">SPRING DYNAMICS</span>Cursor magnetic tracking utilizes Hooke's Law (F = -k*x - c*v) for fluid, weighted tactile momentum.</div>
+            <div style="margin-top: 6px;"><span class="info-pill-tag">SUB-PIXEL SPECULAR</span>Custom gradient rims simulate physical refraction and internal total reflection along glass edges.</div>
+          </div>
+
+          <p class="info-concept" style="font-size: 8pt;">
+            <strong>Project Technical Benchmark:</strong> Demonstrates the production design system engineering found in Apple macOS Sonoma, Windows 11 Fluent, and Stripe flagship applications.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: LAB 5 - PROCEDURAL TOPOLOGY & NOISE -->
+    <div class="slide-panel" id="slide-7">
+      <div class="lab-layout">
+        <!-- Control Panel (Left) -->
+        <div class="lab-control-panel interactive">
+          <div class="lab-tag">LAB 05 // GLSL PROCEDURAL MORPHOLOGY</div>
+          <h2 class="lab-title">Simplex Topology Warp</h2>
+          <p style="font-size: 8.5pt; color: var(--text-muted); line-height: 1.4;">Mathematical vertex displacement calculated per frame over 8,192 geometry vertices.</p>
+
+          <div class="control-group">
+            <div class="control-label"><span>DISPLACEMENT AMPLITUDE</span><span id="noise-amp-val">0.40</span></div>
+            <input type="range" min="0" max="100" value="40" class="range-slider" id="noise-amp-slider">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>WAVE FREQUENCY</span><span id="noise-freq-val">2.80</span></div>
+            <input type="range" min="5" max="80" value="28" class="range-slider" id="noise-freq-slider">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>WARP SPEED</span><span id="noise-speed-val">1.50</span></div>
+            <input type="range" min="5" max="50" value="15" class="range-slider" id="noise-speed-slider">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label"><span>GEOMETRIC PRIMITIVE</span></div>
+            <div class="btn-row">
+              <button class="toggle-btn active" id="geom-sphere">SPHERE</button>
+              <button class="toggle-btn" id="geom-torus">TORUS</button>
+              <button class="toggle-btn" id="geom-cylinder">CYLINDER</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Qualities & Core Engineering Architecture (Right) -->
+                <!-- Centerpiece Stage (The Hero - Camera Viewfinder) -->
+        <main class="station-centerpiece-stage">
+          <div class="centerpiece-reticle">
+            <div class="reticle-corner-tl"></div>
+            <div class="reticle-corner-tr"></div>
+            <div class="reticle-corner-bl"></div>
+            <div class="reticle-corner-br"></div>
+            <div class="reticle-top-info">
+              <span>GLSL 4D SIMPLEX WARP</span>
+              <span>VERTEX RESOLUTION: 32,000 NODES</span>
+            </div>
+            <div class="reticle-bottom-info">
+              <span>OCTAVES: 4 · PERSISTENCE: 0.50</span>
+              <span>REAL-TIME NORMAL RECALCULATION</span>
+            </div>
+          </div>
+        </main>
+        <div class="info-briefing-panel interactive">
+          <div class="info-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            PROJECT QUALITIES // MATHEMATICAL GEOMETRY ENGINE
+          </div>
+          <h3 class="info-title">Core Engineering Capabilities</h3>
+          <p class="info-concept">
+            Eliminating the need for heavy 3D asset downloads, this project demonstrates <strong>Algorithmic Geometric Synthesis</strong> by deforming 8,192 geometry coordinates per frame purely through mathematical trigonometric noise.
+          </p>
+
+          <div class="info-metric-card">
+            <div><span class="info-pill-tag">ZERO MEGABYTE ASSETS</span>Entire organic, liquid 3D topologies are synthesized at runtime with 0 KB of external 3D files.</div>
+            <div style="margin-top: 6px;"><span class="info-pill-tag">HARMONIC DEFORMATION</span>3-axis sinusoidal harmonic equations evaluate coordinate displacement in graphics memory every frame.</div>
+            <div style="margin-top: 6px;"><span class="info-pill-tag">PRIMITIVE INTERCHANGE</span>Dynamic hot-swapping between spheres, toruses, and cylinders with preserved vertex topology.</div>
+          </div>
+
+          <p class="info-concept" style="font-size: 8pt;">
+            <strong>Project Technical Benchmark:</strong> Powers the next generation of procedural terrain generators, fluid wave mechanics, and instant-load web hero experiences.
+          </p>
+        </div>
+      </div>
+    </div>
+
+            <!-- SLIDE 8: COSMIC TELEMETRY DASHBOARD (COMPLEX CHART) -->
+    <div class="slide-panel" id="slide-8">
+      <div class="chart-screen-container interactive">
+        <div class="chart-card-wrapper">
+          <!-- Aerospace Corner Precision Marks -->
+          <div class="hud-corner-mark top-left">+</div>
+          <div class="hud-corner-mark top-right">+</div>
+          <div class="hud-corner-mark bottom-left">+</div>
+          <div class="hud-corner-mark bottom-right">+</div>
+
+          <!-- Top Header Tier (Symmetrical Layout) -->
+          <div class="chart-top-bar">
+            <div class="chart-header-left">
+              <div class="lab-tag">TELEMETRY 01 // COSMOLOGICAL ENERGY PARTITION &amp; &Lambda;CDM CHRONOLOGY</div>
+              <h2 class="chart-title">13.8 Billion-Year Evolution: Radiation, Matter &amp; Dark Energy</h2>
+              <div class="chart-subtitle">Concordance FLRW Metric Scale Evolution: &rho;(a) &prop; a<sup>-n</sup> with Planck 2018 Parameter Constraints</div>
+            </div>
+            <div class="chart-control-cluster">
+              <div class="control-group">
+                <span class="control-group-title">EPOCH WINDOW</span>
+                <div class="stage-jump-pills">
+                  <button class="jump-pill active" id="btn-chart-all">All Epochs (13.8B yr)</button>
+                  <button class="jump-pill" id="btn-chart-early">Early (0 - 380 kyr)</button>
+                  <button class="jump-pill" id="btn-chart-modern">Modern (100 Myr - Future)</button>
+                </div>
+              </div>
+              <div class="control-group">
+                <span class="control-group-title">METRIC MODE</span>
+                <div class="stage-jump-pills">
+                  <button class="jump-pill active" id="btn-metric-omega">&Omega; FRACTION (%)</button>
+                  <button class="jump-pill" id="btn-metric-log">LOG DENSITY log<sub>10</sub> &rho;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Integrated Precision Telemetry Datum Strip -->
+          <div class="cosmic-telemetry-hud" id="cosmic-inspect-hud">
+            <div class="hud-item epoch-info">
+              <span class="hud-label">ACTIVE / HOVER EPOCH</span>
+              <span class="hud-val highlight" id="hud-epoch-name">Present Day (13.8B yr)</span>
+            </div>
+            <div class="hud-divider"></div>
+            <div class="hud-item">
+              <span class="hud-label">REDSHIFT (z)</span>
+              <span class="hud-val" id="hud-redshift">0.000</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">SCALE FACTOR (a)</span>
+              <span class="hud-val" id="hud-scale-a">1.0000</span>
+            </div>
+            <div class="hud-item regime-item">
+              <span class="hud-label">DOMINANT REGIME</span>
+              <span class="hud-val" id="hud-regime" style="color: var(--accent-cyan);">DARK ENERGY ACCELERATION</span>
+            </div>
+            <div class="hud-divider"></div>
+            <div class="hud-item hud-bars-container">
+              <span class="hud-label">ENERGY SPECTRUM RATIO</span>
+              <div class="mini-bar-row">
+                <span style="color: #00f0ff;">&Omega;<sub>&Lambda;</sub> <b id="hud-bar-de">68.3%</b></span>
+                <div class="mini-bar-track"><div class="mini-bar-fill" id="bar-de" style="width: 68.3%; background: #00f0ff; box-shadow: 0 0 10px #00f0ff;"></div></div>
+                <span style="color: #b026ff; margin-left: 12px;">&Omega;<sub>c</sub> <b id="hud-bar-dm">26.8%</b></span>
+                <div class="mini-bar-track"><div class="mini-bar-fill" id="bar-dm" style="width: 26.8%; background: #b026ff; box-shadow: 0 0 10px #b026ff;"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Monumental Hero Chart Canvas (~480px tall) -->
+          <div class="chart-canvas-box" id="box-cosmic-canvas">
+            <canvas id="cosmicChartCanvas"></canvas>
+          </div>
+
+          <!-- Symmetrical 4-Column Interactive Dock (Metric Readout + Legend + Curve Filter) -->
+          <div class="cosmic-components-grid">
+            <div class="interactive-component-card" id="card-cosmic-de" data-component="de">
+              <div class="card-glow-indicator" style="background: #00f0ff;"></div>
+              <div class="card-header-row">
+                <span class="card-name" style="color: #00f0ff;">DARK ENERGY &Omega;<sub>&Lambda;</sub></span>
+                <span class="card-badge" id="badge-de">ACTIVE</span>
+              </div>
+              <div class="card-val" id="val-de">68.3%</div>
+              <div class="card-desc">w = -1.03 &plusmn; 0.03 &bull; Negative Pressure Vacuum Energy</div>
+              <div class="card-action-hint">CLICK TO ISOLATE CURVE</div>
+            </div>
+
+            <div class="interactive-component-card" id="card-cosmic-dm" data-component="dm">
+              <div class="card-glow-indicator" style="background: #b026ff;"></div>
+              <div class="card-header-row">
+                <span class="card-name" style="color: #b026ff;">COLD DARK MATTER &Omega;<sub>c</sub></span>
+                <span class="card-badge" id="badge-dm">ACTIVE</span>
+              </div>
+              <div class="card-val" id="val-dm">26.8%</div>
+              <div class="card-desc">Collisionless &bull; Cosmic Web Halo Gravitational Wells</div>
+              <div class="card-action-hint">CLICK TO ISOLATE CURVE</div>
+            </div>
+
+            <div class="interactive-component-card" id="card-cosmic-b" data-component="b">
+              <div class="card-glow-indicator" style="background: #ffd700;"></div>
+              <div class="card-header-row">
+                <span class="card-name" style="color: #ffd700;">BARYONIC ATOMS &Omega;<sub>b</sub></span>
+                <span class="card-badge" id="badge-b">ACTIVE</span>
+              </div>
+              <div class="card-val" id="val-b">4.9%</div>
+              <div class="card-desc">Hydrogen/Helium Plasma &bull; Stars, Galaxies &amp; Dust</div>
+              <div class="card-action-hint">CLICK TO ISOLATE CURVE</div>
+            </div>
+
+            <div class="interactive-component-card" id="card-cosmic-r" data-component="r">
+              <div class="card-glow-indicator" style="background: #ff003c;"></div>
+              <div class="card-header-row">
+                <span class="card-name" style="color: #ff003c;">COSMIC RADIATION &Omega;<sub>&gamma;</sub></span>
+                <span class="card-badge" id="badge-r">ACTIVE</span>
+              </div>
+              <div class="card-val" id="val-r">0.005%</div>
+              <div class="card-desc">2.7255 K CMB Photons &bull; Relativistic Neutrinos</div>
+              <div class="card-action-hint">CLICK TO ISOLATE CURVE</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: WEB ARCHITECTURE & GPU FRAME BUDGET (DUAL COMPLEX CHARTS) -->
+    <div class="slide-panel" id="slide-9">
+      <div class="chart-screen-container interactive">
+        <div class="chart-card-wrapper">
+          <!-- Aerospace Corner Precision Marks -->
+          <div class="hud-corner-mark top-left">+</div>
+          <div class="hud-corner-mark top-right">+</div>
+          <div class="hud-corner-mark bottom-left">+</div>
+          <div class="hud-corner-mark bottom-right">+</div>
+
+          <!-- Top Header Tier (Symmetrical Layout) -->
+          <div class="chart-top-bar">
+            <div class="chart-header-left">
+              <div class="lab-tag">TELEMETRY 02 // SUB-MILLISECOND RUNTIME ENGINE &amp; HARDWARE PROFILER</div>
+              <h2 class="chart-title">Real-Time 16.6ms GPU Engine &amp; Sub-Millisecond Frame Profiler</h2>
+              <div class="chart-subtitle">Continuous Pipeline Telemetry: WebGL Rasterizer, Physics Kernel &amp; VRAM Allocator</div>
+            </div>
+            <div class="chart-control-cluster">
+              <div class="control-group">
+                <span class="control-group-title">LIVE MONITORING</span>
+                <div class="stage-jump-pills">
+                  <button class="jump-pill active stream-live-btn" id="btn-stream-toggle">
+                    <span class="live-dot-pulse"></span> STREAMING LIVE (60 Hz)
+                  </button>
+                  <button class="jump-pill stress-btn" id="btn-stress-test">
+                    &#9889; SIMULATE LOAD SPIKE
+                  </button>
+                </div>
+              </div>
+              <div class="control-group">
+                <span class="control-group-title">VSYNC TARGET</span>
+                <div class="stage-jump-pills">
+                  <button class="jump-pill active" id="btn-fps-60">60 FPS (16.6ms)</button>
+                  <button class="jump-pill" id="btn-fps-120">120 FPS (8.3ms)</button>
+                  <button class="jump-pill" id="btn-fps-240">240 FPS (4.1ms)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dual Telemetry Cockpit (55% / 45% Bilateral Balance) -->
+          <div class="dual-chart-grid" id="grid-perf-cockpit">
+            <!-- Left Wing (55%): High-Frequency Waterfall Stream Chart -->
+            <div class="telemetry-panel-box">
+              <div class="panel-box-header">
+                <div class="panel-box-title">
+                  <span class="panel-indicator-dot" style="background: #00f0ff;"></span>
+                  REAL-TIME RENDER LOOP EXECUTION (ROLLING 30-SAMPLE BUFFER)
+                </div>
+                <div class="panel-status-pill" id="perf-status-badge">NOMINAL JITTER (&lt; 0.4ms)</div>
+              </div>
+              <div class="chart-canvas-box" id="box-stream-canvas">
+                <canvas id="perfStreamChartCanvas"></canvas>
+              </div>
+            </div>
+
+            <!-- Right Wing (45%): Radar Architectural Capability Benchmark -->
+            <div class="telemetry-panel-box">
+              <div class="panel-box-header">
+                <div class="panel-box-title">
+                  <span class="panel-indicator-dot" style="background: #ffd700;"></span>
+                  HARDWARE EFFICIENCY &amp; RADAR BENCHMARK
+                </div>
+              </div>
+              <div class="chart-canvas-box" id="box-radar-canvas">
+                <canvas id="perfRadarChartCanvas"></canvas>
+              </div>
+              <!-- Micro-Vitals Matrix below Radar -->
+              <div class="radar-micro-vitals">
+                <div class="vital-item">
+                  <span class="vital-lbl">DRAW CALLS</span>
+                  <span class="vital-val" id="metric-draw-calls">14 calls</span>
+                </div>
+                <div class="vital-item">
+                  <span class="vital-lbl">VRAM ALLOC</span>
+                  <span class="vital-val" id="metric-vram">18.4 MB</span>
+                </div>
+                <div class="vital-item">
+                  <span class="vital-lbl">GC JITTER</span>
+                  <span class="vital-val" id="metric-gc">0.12 ms</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Symmetrical 4-Pillar Health Dock -->
+          <div class="perf-stat-grid">
+            <div class="perf-stat-card">
+              <div class="perf-stat-header">
+                <span class="perf-stat-lbl">AVERAGE FRAME TIME</span>
+                <span class="perf-stat-sub">Rolling 30-Frame Mean</span>
+              </div>
+              <div class="perf-stat-val" id="telemetry-avg-frame">7.6 ms</div>
+              <div class="perf-progress-bar"><div class="perf-progress-fill" id="fill-avg-frame" style="width: 45.8%; background: #00f0ff;"></div></div>
+            </div>
+
+            <div class="perf-stat-card">
+              <div class="perf-stat-header">
+                <span class="perf-stat-lbl">99TH PERCENTILE (P99)</span>
+                <span class="perf-stat-sub">Worst-Case Frame Interval</span>
+              </div>
+              <div class="perf-stat-val" id="telemetry-p99">10.4 ms</div>
+              <div class="perf-progress-bar"><div class="perf-progress-fill" id="fill-p99" style="width: 62.6%; background: #ffd700;"></div></div>
+            </div>
+
+            <div class="perf-stat-card">
+              <div class="perf-stat-header">
+                <span class="perf-stat-lbl">VSYNC HEADROOM</span>
+                <span class="perf-stat-sub" id="telemetry-target-sub">Target: 16.6ms (60 FPS)</span>
+              </div>
+              <div class="perf-stat-val" id="telemetry-headroom" style="color: var(--accent-emerald);">+54.2% MARGIN</div>
+              <div class="perf-progress-bar"><div class="perf-progress-fill" id="fill-headroom" style="width: 54.2%; background: var(--accent-emerald);"></div></div>
+            </div>
+
+            <div class="perf-stat-card">
+              <div class="perf-stat-header">
+                <span class="perf-stat-lbl">GPU CONTEXT INTEGRITY</span>
+                <span class="perf-stat-sub">WebGL Device State</span>
+              </div>
+              <div class="perf-stat-val" id="telemetry-context-loss" style="color: var(--accent-emerald);">0.00% ZERO LOSS</div>
+              <div class="perf-progress-bar"><div class="perf-progress-fill" style="width: 100%; background: var(--accent-emerald);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: PURE CYLINDRICAL LUMINOUS WORMHOLE & TEMPORAL RESET -->
+    <div class="slide-panel" id="slide-10" style="padding: 0; margin: 0; width: 100vw; height: 100vh; max-width: 100vw; overflow: hidden; pointer-events: none; border: none; background: transparent;">
+      <div style="display: none;">
+        <div>
+          <div id="wormhole-transit-status"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 11: SECRET EXECUTIVE VIP LOUNGE (DEDICATED SLIDE) -->
+    <div class="slide-panel interactive" id="slide-11" style="flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 40px 24px 100px 24px; box-sizing: border-box; overflow-y: auto;">
+      <div class="vip-slide-container">
+        <!-- VIP Header with Fast Navigation -->
+        <div class="vip-slide-header">
+          <div>
+            <div class="lab-tag" style="color: var(--accent-gold); font-size: 8pt; letter-spacing: 0.2em;">EXECUTIVE RESEARCH CLEARANCE &Omega; // STATION 11</div>
+            <h1 style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.04em; font-size: 24pt; color: #ffffff; margin: 4px 0 0 0;">Aether VIP Executive Lounge</h1>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button class="card-pill-btn" id="vip-jump-s1-btn" style="padding: 8px 16px; font-size: 8pt; border-color: rgba(255,215,0,0.35); color: var(--accent-gold);">
+              &#9668; RETURN TO GATEWAY 01
+            </button>
+            <button class="card-pill-btn" id="vip-jump-s10-btn" style="padding: 8px 16px; font-size: 8pt; border-color: rgba(0,240,255,0.35); color: var(--accent-cyan);">
+              &#9668; STATION 10
+            </button>
+          </div>
+        </div>
+
+        <!-- 3 VIP Suite Navigation Tabs -->
+        <div class="vip-nav-tabs">
+          <div class="vip-tab active" data-suite="suite-forge">1. Quantum Material Forge</div>
+          <div class="vip-tab" data-suite="suite-2">2. Grand Cru Reserve // Chardonnay</div>
+          <div class="vip-tab" data-suite="suite-3">3. Private Vault // Banking Terminal</div>
+        </div>
+
+        <!-- Suite 1: Quantum Material Forge (Active & fully functional) -->
+        <div id="suite-forge" class="vip-suite-content" style="display: block;">
+          <div class="vip-suite-card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <div>
+                <span class="lab-tag" style="color: var(--accent-gold);">SUITE 01 // OPERATIONAL</span>
+                <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 15pt; margin: 6px 0 4px 0; color: #fff;">Global Scene Chromatic Grade</h3>
+                <p style="color: var(--text-muted); font-size: 9pt; margin: 0;">Applies high-dynamic-range color grading and environment mapping across all stations simultaneously.</p>
+              </div>
+              <div class="auth-status-chip" style="background: rgba(255,215,0,0.1); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-size: 8pt; padding: 4px 12px; border-radius: 4px;">
+                STATUS: ONLINE
+              </div>
+            </div>
+
+            <div class="btn-row" style="margin-top: 18px;">
+              <button class="toggle-btn active" id="theme-deep">DEEP COSMOS (CYAN)</button>
+              <button class="toggle-btn" id="theme-solar">SOLAR FLARE (GOLD)</button>
+              <button class="toggle-btn" id="theme-mono">OBSIDIAN MONOLITH (PLATINUM)</button>
+              <button class="toggle-btn" id="theme-hyper">NEON HYPERDRIVE (VIOLET)</button>
+            </div>
+
+            <!-- Consistent VIP Suite Changing Slider -->
+            <div class="vip-suite-slider">
+              <span class="vip-slider-lbl">SUITE NAVIGATION:</span>
+              <button class="vip-suite-slider-btn active" data-suite="suite-forge" type="button">1. Quantum Material Forge</button>
+              <button class="vip-suite-slider-btn" data-suite="suite-2" type="button">2. Grand Cru Reserve // Chardonnay</button>
+              <button class="vip-suite-slider-btn" data-suite="suite-3" type="button">3. Private Vault // Banking Terminal</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Suite 2: Grand Cru Reserve // Faceted Chardonnay Security Trap -->
+        <div id="suite-2" class="vip-suite-content" style="display: none;">
+          <div class="vip-suite-card chardonnay-lounge-stage">
+            <!-- Header: Sommelier Clearance & Degustation Info -->
+            <div class="chardonnay-header">
+              <div>
+                <span class="lab-tag" style="color: var(--accent-gold); letter-spacing: 0.16em;">SUITE 02 // PRIVATE CELLAR RESERVE</span>
+                <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 16pt; margin: 4px 0 2px 0; color: #ffffff;">Faceted Crystal Chardonnay Grand Cru</h3>
+                <p style="color: var(--text-muted); font-size: 8.5pt; margin: 0;">Hexagonal geometric crystal decanter &bull; Napa Valley Reserve &bull; Pale golden vintage served at 10.5&deg;C</p>
+              </div>
+              <div id="chardonnay-sommelier-status" class="chardonnay-status-chip">
+                CHARDONNAY GRAND CRU // READY FOR DEGUSTATION
+              </div>
+            </div>
+
+            <!-- The Luxury Stage: Interactive Bottle, Glass, Liquid Pour, and Tabletop -->
+            <div class="chardonnay-stage-viewport" id="chardonnay-viewport">
+              <canvas id="chardonnay-3d-canvas" class="chardonnay-3d-canvas"></canvas>
+              <div class="chardonnay-table-surface"></div>
+              <div class="chardonnay-table-reflection"></div>
+              
+              <!-- Stage Objects Container -->
+              <div class="chardonnay-objects-stage">
+                
+                <!-- Stemmed Wine Glass Assembly (Starts Empty, Fills Dynamically) -->
+                <div class="chardonnay-glass-wrapper" id="chardonnay-glass-target" title="Crystal Wine Glass">
+                  <svg class="chardonnay-glass-svg" viewBox="0 0 120 220" width="120" height="220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="glassStemGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="rgba(255,255,255,0.15)"/>
+                        <stop offset="50%" stop-color="rgba(255,255,255,0.6)"/>
+                        <stop offset="100%" stop-color="rgba(255,255,255,0.15)"/>
+                      </linearGradient>
+                      <linearGradient id="wineLiquidGrad" x1="0" y1="1" x2="0" y2="0">
+                        <stop offset="0%" stop-color="#d4af37" stop-opacity="0.95"/>
+                        <stop offset="40%" stop-color="#f5e18a" stop-opacity="0.85"/>
+                        <stop offset="85%" stop-color="#fff3b0" stop-opacity="0.75"/>
+                        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.5"/>
+                      </linearGradient>
+                      <linearGradient id="glassReflection" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="rgba(255,255,255,0.4)"/>
+                        <stop offset="30%" stop-color="rgba(255,255,255,0.05)"/>
+                        <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
+                        <stop offset="100%" stop-color="rgba(255,255,255,0.25)"/>
+                      </linearGradient>
+                      <clipPath id="glassBowlClip">
+                        <path d="M25,20 C25,75 38,115 60,115 C82,115 95,75 95,20 Z"/>
+                      </clipPath>
+                    </defs>
+                    <!-- Liquid Fill inside bowl (Starts empty, scales up on pour) -->
+                    <g clip-path="url(#glassBowlClip)">
+                      <rect id="chardonnay-glass-liquid" x="20" y="45" width="80" height="72" fill="url(#wineLiquidGrad)" style="transform-origin: bottom center; transform: scaleY(0); opacity: 0;"/>
+                    </g>
+                    <!-- Glass Bowl Outline & Crystal Highlights -->
+                    <path d="M25,20 C25,75 38,115 60,115 C82,115 95,75 95,20" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="url(#glassReflection)"/>
+                    <!-- Glass Rim -->
+                    <ellipse cx="60" cy="20" rx="35" ry="5" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="rgba(255,255,255,0.05)"/>
+                    <!-- Glass Stem -->
+                    <path d="M58,115 L58,185 L62,185 L62,115 Z" fill="url(#glassStemGrad)"/>
+                    <!-- Glass Base / Foot -->
+                    <ellipse cx="60" cy="186" rx="32" ry="6" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="rgba(255,255,255,0.08)"/>
+                    <ellipse cx="60" cy="186" rx="20" ry="3" fill="rgba(255,255,255,0.2)"/>
+                    <!-- Crystal Glint -->
+                    <line x1="32" y1="35" x2="42" y2="90" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                  <div class="glass-shadow"></div>
+                </div>
+
+                <!-- Dynamic Liquid Pouring Stream (Hidden until State B) -->
+                <div id="chardonnay-pour-stream" class="chardonnay-pour-stream"></div>
+
+                <!-- Faceted Hexagonal Crystal Bottle Assembly -->
+                <div class="chardonnay-bottle-wrapper" id="chardonnay-bottle-target" title="Faceted Hexagonal Chardonnay Bottle">
+                  <div id="chardonnay-bottle-assembly" class="chardonnay-bottle-assembly">
+                    <svg class="chardonnay-bottle-svg" viewBox="0 0 170 300" width="170" height="300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id="goldCapGrad" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stop-color="#b8860b"/>
+                          <stop offset="25%" stop-color="#ffd700"/>
+                          <stop offset="60%" stop-color="#ffe66d"/>
+                          <stop offset="100%" stop-color="#996515"/>
+                        </linearGradient>
+                        <linearGradient id="bottleGlassGrad" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stop-color="rgba(10,35,45,0.85)"/>
+                          <stop offset="25%" stop-color="rgba(20,65,75,0.7)"/>
+                          <stop offset="50%" stop-color="rgba(230,195,100,0.55)"/>
+                          <stop offset="75%" stop-color="rgba(20,65,75,0.7)"/>
+                          <stop offset="100%" stop-color="rgba(5,25,35,0.9)"/>
+                        </linearGradient>
+                        <linearGradient id="innerWineGrad" x1="0" y1="1" x2="0" y2="0">
+                          <stop offset="0%" stop-color="#c69214" stop-opacity="0.95"/>
+                          <stop offset="50%" stop-color="#e8be3e" stop-opacity="0.85"/>
+                          <stop offset="85%" stop-color="#fdf1a9" stop-opacity="0.75"/>
+                          <stop offset="100%" stop-color="#fff8db" stop-opacity="0.6"/>
+                        </linearGradient>
+                        <linearGradient id="facetHighlight" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stop-color="rgba(255,255,255,0.4)"/>
+                          <stop offset="100%" stop-color="rgba(255,255,255,0.02)"/>
+                        </linearGradient>
+                        <linearGradient id="goldLabelGrad" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stop-color="#0a121d"/>
+                          <stop offset="100%" stop-color="#050a10"/>
+                        </linearGradient>
+                        <clipPath id="bottleBodyClip">
+                          <path d="M75,10 L95,10 L95,70 C108,82 135,115 142,150 L145,260 C145,272 138,278 126,278 L44,278 C32,278 25,272 25,260 L28,150 C35,115 62,82 75,70 Z"/>
+                        </clipPath>
+                      </defs>
+
+                      <!-- Bottle Silhouette Body -->
+                      <path d="M75,10 L95,10 L95,70 C108,82 135,115 142,150 L145,260 C145,272 138,278 126,278 L44,278 C32,278 25,272 25,260 L28,150 C35,115 62,82 75,70 Z" fill="url(#bottleGlassGrad)" stroke="rgba(255,215,0,0.3)" stroke-width="1.5"/>
+
+                      <!-- Wine liquid inside bottle -->
+                      <g clip-path="url(#bottleBodyClip)">
+                        <rect x="20" y="80" width="130" height="200" fill="url(#innerWineGrad)"/>
+
+                        <!-- Hexagonal Faceted Glass Pattern Overlay (Honeycomb Grid) -->
+                        <!-- Row 1 -->
+                        <polygon points="85,130 102,140 102,160 85,170 68,160 68,140" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" fill="url(#facetHighlight)"/>
+                        <polygon points="120,130 137,140 137,160 120,170 103,160 103,140" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="rgba(255,255,255,0.06)"/>
+                        <polygon points="50,130 67,140 67,160 50,170 33,160 33,140" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="rgba(255,255,255,0.06)"/>
+
+                        <!-- Row 2 -->
+                        <polygon points="85,175 102,185 102,205 85,215 68,205 68,185" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" fill="url(#facetHighlight)"/>
+                        <polygon points="120,175 137,185 137,205 120,215 103,205 103,185" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="rgba(255,255,255,0.06)"/>
+                        <polygon points="50,175 67,185 67,205 50,215 33,205 33,185" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="rgba(255,255,255,0.06)"/>
+
+                        <!-- Row 3 -->
+                        <polygon points="85,220 102,230 102,250 85,260 68,250 68,230" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" fill="url(#facetHighlight)"/>
+                        <polygon points="120,220 137,230 137,250 120,260 103,250 103,230" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="rgba(255,255,255,0.06)"/>
+                        <polygon points="50,220 67,230 67,250 50,260 33,250 33,230" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="rgba(255,255,255,0.06)"/>
+
+                        <!-- Vertical Facet Refraction Ribs -->
+                        <line x1="85" y1="75" x2="85" y2="275" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
+                        <line x1="68" y1="85" x2="68" y2="275" stroke="rgba(255,215,0,0.35)" stroke-width="1"/>
+                        <line x1="102" y1="85" x2="102" y2="275" stroke="rgba(255,215,0,0.35)" stroke-width="1"/>
+                        <line x1="42" y1="110" x2="42" y2="270" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                        <line x1="128" y1="110" x2="128" y2="270" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+
+                        <!-- Hexagonal Front Label -->
+                        <g transform="translate(85, 175)">
+                          <polygon points="0,-32 28,-16 28,16 0,32 -28,16 -28,-16" fill="url(#goldLabelGrad)" stroke="url(#goldCapGrad)" stroke-width="2"/>
+                          <polygon points="0,-27 23,-13 23,13 0,27 -23,13 -23,-13" stroke="rgba(255,215,0,0.4)" stroke-width="0.8" fill="none"/>
+                          <circle cx="0" cy="-14" r="3" fill="#ffd700"/>
+                          <path d="M-6,-14 Q0,-19 6,-14" stroke="#ffd700" stroke-width="0.8" fill="none"/>
+                          <text x="0" y="-2" fill="#ffd700" font-family="'Space Grotesk', 'Cinzel', serif" font-size="5.5" font-weight="700" text-anchor="middle" letter-spacing="1.2">CHARDONNAY</text>
+                          <text x="0" y="6" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="3.2" text-anchor="middle" letter-spacing="0.8">GRAND CRU</text>
+                          <text x="0" y="14" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="3" text-anchor="middle" letter-spacing="1">NAPA VALLEY</text>
+                          <text x="0" y="21" fill="rgba(255,255,255,0.5)" font-family="'JetBrains Mono', monospace" font-size="2.6" text-anchor="middle">2018 &bull; 750 ML</text>
+                        </g>
+                      </g>
+
+                      <!-- Bottle Neck & Gold Collar -->
+                      <rect x="73" y="45" width="24" height="18" fill="url(#goldCapGrad)" rx="1"/>
+                      <line x1="73" y1="54" x2="97" y2="54" stroke="#000" stroke-width="0.6"/>
+                      
+                      <!-- Gold Cap / Stopper -->
+                      <rect x="71" y="8" width="28" height="14" fill="url(#goldCapGrad)" rx="2"/>
+                      <ellipse cx="85" cy="8" rx="14" ry="3" fill="#ffe66d"/>
+                      <rect x="74" y="20" width="22" height="4" fill="#b8860b"/>
+
+                      <!-- Bottle Specular Light Sheen Reflection -->
+                      <path d="M38,125 C34,145 32,190 32,250" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M44,120 C40,140 38,190 38,255" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <div class="bottle-shadow"></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+              <!-- Sommelier Tasting Notes & Discreet Drink Action Row -->
+              <div class="chardonnay-action-bar">
+                <div class="tasting-notes">
+                  <span class="note-pill">AROMA: White Peach, Toasted Brioche, Meyer Lemon</span>
+                  <span class="note-pill">PALATE: Creamy Minerality &bull; Crisp Acidity &bull; French Oak Finish</span>
+                </div>
+                <button id="btn-drink-chardonnay" class="chardonnay-drink-btn">
+                  Drink the fine Chardonnay
+                </button>
+              </div>
+
+              <!-- Consistent VIP Suite Changing Slider -->
+              <div class="vip-suite-slider">
+                <span class="vip-slider-lbl">SUITE NAVIGATION:</span>
+                <button class="vip-suite-slider-btn" data-suite="suite-forge" type="button">1. Quantum Material Forge</button>
+                <button class="vip-suite-slider-btn active" data-suite="suite-2" type="button">2. Grand Cru Reserve // Chardonnay</button>
+                <button class="vip-suite-slider-btn" data-suite="suite-3" type="button">3. Private Vault // Banking Terminal</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Suite 3: Sovereign Private Vault & Offshore Banking Terminal -->
+        <div id="suite-3" class="vip-suite-content" style="display: none;">
+          <div class="vip-suite-card bank-terminal-stage" id="bank-terminal-stage">
+            
+            <!-- Terminal Header -->
+            <div class="bank-terminal-header">
+              <div class="bank-brand-row">
+                <div class="bank-crest-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="1.8">
+                    <path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2l9 6H3l9-6z"/>
+                  </svg>
+                </div>
+                <div>
+                  <span class="lab-tag" style="color: var(--accent-gold); letter-spacing: 0.18em;">SUITE 03 // PRIVATE VAULT CUSTODY</span>
+                  <h3 class="bank-title">Sovereign Asset Reserve &bull; Private Client Terminal</h3>
+                  <p class="bank-subtitle">Zurich &bull; Geneva &bull; Singapore &bull; Ultra-High-Net-Worth Liquid Asset Clearing</p>
+                </div>
+              </div>
+              <div class="bank-status-chip" id="bank-connection-status">
+                <span class="bank-status-dot"></span>
+                VAULT NETWORK: ENCRYPTED // ZURICH NODE
+              </div>
+            </div>
+
+            <!-- Physical / Digital Banking Terminal Chassis -->
+            <div class="bank-chassis" id="bank-machine-chassis">
+              
+              <!-- Terminal Screen Housing -->
+              <div class="bank-screen-bezel">
+                <div class="bank-screen-top-bar">
+                  <span class="bank-screen-logo">AURUM PRIVATE RESERVE &bull; SWISS CUSTODY</span>
+                  <span class="bank-terminal-id">TERMINAL #ZH-094 // SECURE ENCLAVE</span>
+                </div>
+
+                <!-- Main Dynamic Display Screen -->
+                <div class="bank-display-screen" id="bank-display-screen">
+                  
+                  <!-- Phase 1: Resting / Ready Standby Screen -->
+                  <div class="bank-screen-phase active" id="bank-phase-standby">
+                    <div class="bank-standby-hero">
+                      <div class="bank-vault-emblem">
+                        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="1.5">
+                          <circle cx="12" cy="12" r="9"/>
+                          <circle cx="12" cy="12" r="3"/>
+                          <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>
+                        </svg>
+                      </div>
+                      <h2 class="bank-standby-title">Confidential Wealth Portfolio Access</h2>
+                      <p class="bank-standby-desc">Authenticate biometric token to inspect discretionary liquid funds, unencumbered bullion, and offshore balances.</p>
+                      
+                      <div class="bank-credentials-row">
+                        <div class="bank-cred-box">
+                          <span class="bank-cred-lbl">CLIENT HOLDER</span>
+                          <span class="bank-cred-val">EXECUTIVE VIP ACCESS</span>
+                        </div>
+                        <div class="bank-cred-box">
+                          <span class="bank-cred-lbl">ROUTING</span>
+                          <span class="bank-cred-val">SWIFT: AUCH-CH-22</span>
+                        </div>
+                        <div class="bank-cred-box">
+                          <span class="bank-cred-lbl">SECURITY PROTOCOL</span>
+                          <span class="bank-cred-val" style="color: var(--accent-emerald);">POST-QUANTUM CIPHER</span>
+                        </div>
+                      </div>
+
+                      <button class="bank-interact-btn" id="btn-bank-interact">
+                        <span class="bank-btn-shine"></span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <span>INSERT BLACK CARD &bull; VIEW AVAILABLE BALANCE</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Phase 2: Fictional Account Verification / Loading Sequence -->
+                  <div class="bank-screen-phase" id="bank-phase-verifying" style="display: none;">
+                    <div class="bank-loading-container">
+                      <div class="bank-scan-ring">
+                        <div class="bank-ring-spinner"></div>
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2">
+                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                      </div>
+                      <h3 class="bank-verifying-heading" id="bank-verify-status-title">VERIFYING CLIENT CLEARANCE</h3>
+                      <div class="bank-console-telemetry" id="bank-verify-console">
+                        <div class="bank-log-line active">&gt; INITIATING 4096-BIT QUANTUM HANDSHAKE...</div>
+                        <div class="bank-log-line" id="bank-log-2">&gt; QUERYING ZURICH CUSTODY REPOSITORY...</div>
+                        <div class="bank-log-line" id="bank-log-3">&gt; SYNCING UNRESTRICTED DISCRETIONARY TRUST...</div>
+                      </div>
+                      <div class="bank-verify-progress-bar">
+                        <div class="bank-verify-progress-fill" id="bank-verify-progress-fill"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Phase 3: Available Balance Reveal ($0.00) -->
+                  <div class="bank-screen-phase" id="bank-phase-balance" style="display: none;">
+                    <div class="bank-balance-wrapper">
+                      <div class="bank-account-card-header">
+                        <div class="bank-account-meta">
+                          <span class="bank-acc-type">PRIMARY DISCRETIONARY LIQUID RESERVE</span>
+                          <span class="bank-acc-num">ACC #CH-8809-4402-0000</span>
+                        </div>
+                        <span class="bank-acc-status-tag">STATUS: ACTIVE &bull; AUDITED</span>
+                      </div>
+
+                      <div class="bank-balance-hero">
+                        <span class="bank-balance-label">TOTAL AVAILABLE BALANCE</span>
+                        <div class="bank-balance-amount" id="bank-balance-val">$0.00</div>
+                        <div class="bank-balance-currency">UNITED STATES DOLLARS (USD)</div>
+                      </div>
+
+                      <div class="bank-ledger-breakdown">
+                        <div class="ledger-row">
+                          <span class="ledger-item">Checking Ledger:</span>
+                          <span class="ledger-val">$0.00</span>
+                        </div>
+                        <div class="ledger-row">
+                          <span class="ledger-item">Offshore Money Market:</span>
+                          <span class="ledger-val">$0.00</span>
+                        </div>
+                        <div class="ledger-row">
+                          <span class="ledger-item">Overdraft Facilities:</span>
+                          <span class="ledger-val" style="color: var(--accent-crimson);">$0.00 (DENIED)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Phase 4: Comedic Punchline ("INTERESTING. YOU'RE POOR.") -->
+                  <div class="bank-screen-phase" id="bank-phase-punchline" style="display: none;">
+                    <div class="bank-punchline-card">
+                      <div class="bank-punchline-icon">&#9888;</div>
+                      <h1 class="bank-punchline-main">INTERESTING.</h1>
+                      <h1 class="bank-punchline-sub">YOU'RE POOR.</h1>
+                      <p class="bank-punchline-caption">Portfolio valuation does not satisfy VIP Executive minimum ($100,000,000.00).</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Terminal Lower Physical Control Trim -->
+              <div class="bank-chassis-trim">
+                <div class="bank-card-slot">
+                  <div class="card-slot-light"></div>
+                  <span class="card-slot-lbl">BLACK CARD CHIP INSERTION</span>
+                </div>
+                <div class="bank-keypad-mock">
+                  <div class="keypad-dot"></div><div class="keypad-dot"></div><div class="keypad-dot"></div>
+                  <div class="keypad-dot"></div><div class="keypad-dot"></div><div class="keypad-dot"></div>
+                </div>
+              </div>
+
+              <!-- Consistent VIP Suite Changing Slider -->
+              <div class="vip-suite-slider">
+                <span class="vip-slider-lbl">SUITE NAVIGATION:</span>
+                <button class="vip-suite-slider-btn" data-suite="suite-forge" type="button">1. Quantum Material Forge</button>
+                <button class="vip-suite-slider-btn" data-suite="suite-2" type="button">2. Grand Cru Reserve // Chardonnay</button>
+                <button class="vip-suite-slider-btn active" data-suite="suite-3" type="button">3. Private Vault // Banking Terminal</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Cockpit Footer HUD -->
+  <footer id="cockpit-footer" class="interactive">
+    <div class="footer-left">
+      <span>ENGINE: <span style="color: var(--accent-emerald); font-weight: 700;">OPTIMAL</span></span>
+      <span class="fps-pill" id="footer-fps-display">60 FPS</span>
+      <span>WEBGL 2.0</span>
+    </div>
+
+    <div class="footer-pills">
+      <div class="slide-pill active" data-slide="1">01</div>
+      <div class="slide-pill locked" data-slide="2">02</div>
+      <div class="slide-pill locked" data-slide="3">03</div>
+      <div class="slide-pill locked" data-slide="4">04</div>
+      <div class="slide-pill locked" data-slide="5">05</div>
+      <div class="slide-pill locked" data-slide="6">06</div>
+      <div class="slide-pill locked" data-slide="7">07</div>
+      <div class="slide-pill locked" data-slide="8">08</div>
+      <div class="slide-pill locked" data-slide="9">09</div>
+      <div class="slide-pill locked" data-slide="10">10</div>
+      <div class="slide-pill vip-pill locked" id="footer-vip-btn" data-slide="11">SLIDE 11 // VIP SUITE</div>
+    </div>
+    </div>
+
+    <div class="footer-right">
+      <div id="mini-spectrogram">
+        <div class="spec-bar"></div>
+        <div class="spec-bar"></div>
+        <div class="spec-bar"></div>
+        <div class="spec-bar"></div>
+        <div class="spec-bar"></div>
+        <div class="spec-bar"></div>
+      </div>
+      <span id="audio-toggle-btn" style="cursor: pointer; color: var(--accent-cyan);">SOUND: ON</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- CELESTIAL ATLAS & OBSERVABLE UNIVERSE MODAL (Direct child of body for 100% reliable clicks & ESC close) -->
+<div class="cosmic-modal-overlay" id="orbital-diagram-modal">
+  <div class="cosmic-modal-window">
+    <!-- Floating Corner Close Button -->
+    <button class="modal-corner-close" onclick="closeDiagramModal()" title="Close Atlas (Hotkey: ESC)">✕</button>
+
+    <div class="modal-header-row">
+      <div>
+        <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.04em; font-size: 15pt; font-weight: 700; color: #00f0ff; letter-spacing: 0.1em;">
+          SOLAR SYSTEM CELESTIAL ATLAS &amp; COSMIC ARCHITECTURE
+        </div>
+        <div style="font-size: 8pt; color: #94a3b8; letter-spacing: 0.18em; margin-top: 3px;">
+          KEPLERIAN ORBITAL MECHANICS · GOLDILOCKS HABITABLE ZONE · THE OBSERVABLE UNIVERSE HIERARCHY
+        </div>
+      </div>
+      <button class="modal-close-btn" id="btn-close-diagram" onclick="closeDiagramModal()" title="Close Atlas (Hotkey: ESC)">
+        ✕ CLOSE ATLAS [ESC]
+      </button>
+    </div>
+
+    <!-- Dual View Switcher Tabs -->
+    <div class="atlas-tab-bar">
+      <button class="atlas-tab-btn active" id="tab-btn-solar" onclick="switchAtlasTab('solar')">
+        🪐 SOLAR SYSTEM CELESTIAL BLUEPRINT (0 → 30+ AU)
+      </button>
+      <button class="atlas-tab-btn" id="tab-btn-universe" onclick="switchAtlasTab('universe')">
+        🌌 THE OBSERVABLE UNIVERSE SCALE LADDER (10¹¹ m → 10²⁶ m)
+      </button>
+      <span style="margin-left: auto; font-size: 7.5pt; color: var(--text-muted); letter-spacing: 0.1em;">
+        PRESS <span style="color: var(--accent-cyan); font-weight: 700;">[ESC]</span> ANYTIME TO RETURN
+      </span>
+    </div>
+
+    <!-- VIEW 1: SOLAR SYSTEM ORBITAL BLUEPRINT (PRETTY SVG) -->
+    <div id="atlas-view-solar" style="display: block;">
+      <svg viewBox="0 0 960 280" style="width: 100%; height: auto; background: radial-gradient(circle at 10% 50%, rgba(10, 24, 52, 0.95), rgba(4, 8, 20, 0.98)); border-radius: 14px; border: 1px solid rgba(0, 240, 255, 0.35); box-shadow: inset 0 0 30px rgba(0, 240, 255, 0.08);">
+        <defs>
+          <!-- Sun Radial Glowing Corona -->
+          <radialGradient id="sunCoreGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="25%" stop-color="#fff07a"/>
+            <stop offset="55%" stop-color="#ff9900"/>
+            <stop offset="85%" stop-color="#ff3300"/>
+            <stop offset="100%" stop-color="rgba(255, 51, 0, 0)"/>
+          </radialGradient>
+          <!-- Goldilocks Habitable Zone Gradient -->
+          <linearGradient id="goldilocksGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="rgba(0, 255, 136, 0.02)"/>
+            <stop offset="35%" stop-color="rgba(0, 255, 136, 0.22)"/>
+            <stop offset="65%" stop-color="rgba(0, 255, 136, 0.22)"/>
+            <stop offset="100%" stop-color="rgba(0, 255, 136, 0.02)"/>
+          </linearGradient>
+          <!-- Earth Shading Gradient -->
+          <radialGradient id="earthDiscGrad" cx="40%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#55e2ff"/>
+            <stop offset="50%" stop-color="#0088cc"/>
+            <stop offset="80%" stop-color="#004488"/>
+            <stop offset="100%" stop-color="#001a40"/>
+          </radialGradient>
+          <!-- Jupiter Atmospheric Cloud Bands -->
+          <linearGradient id="jovianGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#d97706"/>
+            <stop offset="25%" stop-color="#fef3c7"/>
+            <stop offset="50%" stop-color="#b45309"/>
+            <stop offset="75%" stop-color="#fde68a"/>
+            <stop offset="100%" stop-color="#92400e"/>
+          </linearGradient>
+          <!-- Saturn Ring Shading -->
+          <linearGradient id="saturnRingGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="rgba(225, 195, 140, 0.9)"/>
+            <stop offset="50%" stop-color="rgba(255, 235, 185, 0.95)"/>
+            <stop offset="70%" stop-color="rgba(120, 95, 60, 0.6)"/>
+            <stop offset="100%" stop-color="rgba(225, 195, 140, 0.9)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Deep Cosmic Stars Background (Delicate Stippling) -->
+        <g opacity="0.45">
+          <circle cx="95" cy="42" r="0.9" fill="#ffffff"/>
+          <circle cx="160" cy="78" r="0.8" fill="#a5f3fc"/>
+          <circle cx="240" cy="35" r="1.1" fill="#ffffff"/>
+          <circle cx="310" cy="85" r="0.7" fill="#fef08a"/>
+          <circle cx="430" cy="45" r="1.0" fill="#ffffff"/>
+          <circle cx="560" cy="65" r="0.8" fill="#93c5fd"/>
+          <circle cx="680" cy="38" r="1.2" fill="#ffffff"/>
+          <circle cx="790" cy="72" r="0.9" fill="#bae6fd"/>
+          <circle cx="890" cy="40" r="1.1" fill="#ffffff"/>
+          <circle cx="110" cy="235" r="0.9" fill="#ffffff"/>
+          <circle cx="210" cy="255" r="0.8" fill="#67e8f9"/>
+          <circle cx="380" cy="240" r="1.1" fill="#ffffff"/>
+          <circle cx="510" cy="248" r="0.8" fill="#fef08a"/>
+          <circle cx="640" cy="250" r="1.0" fill="#ffffff"/>
+          <circle cx="760" cy="238" r="0.9" fill="#a5f3fc"/>
+          <circle cx="880" cy="245" r="1.1" fill="#ffffff"/>
+        </g>
+
+        <!-- CIRCUMSTELLAR HABITABLE ZONE (GOLDILOCKS WATER BAND: 0.95 - 1.37 AU) -->
+        <rect x="235" y="24" width="130" height="232" fill="url(#goldilocksGrad)" rx="10"/>
+        <line x1="235" y1="24" x2="235" y2="256" stroke="#00ff88" stroke-width="0.8" stroke-dasharray="3,3" stroke-opacity="0.6"/>
+        <line x1="365" y1="24" x2="365" y2="256" stroke="#00ff88" stroke-width="0.8" stroke-dasharray="3,3" stroke-opacity="0.6"/>
+        <text x="300" y="38" font-family="'Space Grotesk'" font-size="7.5" font-weight="700" fill="#00ff88" text-anchor="middle" letter-spacing="0.15em">
+          ✦ CIRCUMSTELLAR HABITABLE ZONE (GOLDILOCKS WATER BAND) ✦
+        </text>
+
+        <!-- Main Planetary Orbital Axis Line -->
+        <line x1="70" y1="140" x2="920" y2="140" stroke="rgba(0, 240, 255, 0.2)" stroke-dasharray="4,4"/>
+
+        <!-- 0. THE SUN (SOL) -->
+        <!-- Pulsating Outer Corona Aura -->
+        <circle cx="42" cy="140" r="44" fill="url(#sunCoreGlow)" opacity="0.35"/>
+        <circle cx="42" cy="140" r="32" fill="url(#sunCoreGlow)"/>
+        <!-- Coronal Prominence Loop -->
+        <path d="M 42 108 Q 54 116 42 124" fill="none" stroke="#ffaa00" stroke-width="1.2" opacity="0.85"/>
+        <text x="42" y="144" font-family="'Space Grotesk'" font-size="9" font-weight="700" fill="#050a16" text-anchor="middle">SOL</text>
+        <text x="42" y="190" font-family="'Space Grotesk'" font-size="7.5" font-weight="700" fill="#fbbf24" text-anchor="middle">1.39M KM</text>
+        <text x="42" y="202" font-family="'Space Grotesk'" font-size="6.5" fill="#94a3b8" text-anchor="middle">99.86% MASS</text>
+
+        <!-- 1. MERCURY (0.39 AU / 57.9M KM) -->
+        <circle cx="120" cy="140" r="5" fill="#9ca3af" stroke="#d1d5db" stroke-width="0.8"/>
+        <line x1="120" y1="115" x2="120" y2="165" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="2,2"/>
+        <text x="120" y="106" font-family="'Space Grotesk'" font-size="7.5" font-weight="600" fill="#e2e8f0" text-anchor="middle">Mercury</text>
+        <text x="120" y="178" font-family="'Space Grotesk'" font-size="6.5" font-weight="700" fill="#00f0ff" text-anchor="middle">0.39 AU</text>
+        <text x="120" y="188" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">58M km</text>
+
+        <!-- 2. VENUS (0.72 AU / 108.2M KM) -->
+        <circle cx="180" cy="140" r="8.5" fill="#f59e0b" stroke="#fde68a" stroke-width="0.8"/>
+        <line x1="180" y1="110" x2="180" y2="170" stroke="#f59e0b" stroke-width="0.8" stroke-dasharray="2,2"/>
+        <text x="180" y="101" font-family="'Space Grotesk'" font-size="7.5" font-weight="600" fill="#e2e8f0" text-anchor="middle">Venus</text>
+        <text x="180" y="182" font-family="'Space Grotesk'" font-size="6.5" font-weight="700" fill="#00f0ff" text-anchor="middle">0.72 AU</text>
+        <text x="180" y="192" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">108M km</text>
+
+        <!-- 3. EARTH & MOON (1.000 AU / 149.6M KM) - HIGHLIGHTED -->
+        <!-- Highlight Radiant Glow Ring -->
+        <circle cx="265" cy="140" r="15" fill="none" stroke="#00ff88" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.8"/>
+        <!-- Earth Sphere -->
+        <circle cx="265" cy="140" r="9.5" fill="url(#earthDiscGrad)" stroke="#38bdf8" stroke-width="1.2"/>
+        <!-- Continent Patches -->
+        <path d="M 262 135 Q 266 133 268 136 Q 269 142 264 143 Z" fill="#22c55e" opacity="0.85"/>
+        <path d="M 261 144 Q 265 145 264 148 Q 260 147 261 144 Z" fill="#22c55e" opacity="0.85"/>
+        <!-- Swirling Cloud Filaments -->
+        <ellipse cx="265" cy="138" rx="7" ry="2" fill="#ffffff" opacity="0.5"/>
+        <!-- Orbiting Moon -->
+        <ellipse cx="265" cy="140" rx="19" ry="12" fill="none" stroke="rgba(255,255,255,0.25)" stroke-dasharray="2,2"/>
+        <circle cx="282" cy="132" r="2.6" fill="#e2e8f0" stroke="#94a3b8" stroke-width="0.6"/>
+        <line x1="265" y1="92" x2="265" y2="188" stroke="#00ff88" stroke-width="1.2"/>
+        <text x="265" y="80" font-family="'Space Grotesk'" font-size="8.5" font-weight="700" fill="#00ff88" text-anchor="middle" letter-spacing="0.1em">EARTH (SOL-3)</text>
+        <text x="265" y="90" font-family="'Space Grotesk'" font-size="6.5" fill="#a7f3d0" text-anchor="middle">&amp; MOON (LUNA)</text>
+        <text x="265" y="202" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#00f0ff" text-anchor="middle">1.000 AU</text>
+        <text x="265" y="213" font-family="'Space Grotesk'" font-size="6.5" font-weight="600" fill="#00ff88" text-anchor="middle">149.6M km [HOME]</text>
+
+        <!-- 4. MARS (1.524 AU / 227.9M KM) -->
+        <circle cx="348" cy="140" r="6.5" fill="#ef4444" stroke="#fca5a5" stroke-width="0.8"/>
+        <!-- Northern Polar Ice Cap -->
+        <ellipse cx="348" cy="134.5" rx="2.5" ry="1" fill="#ffffff"/>
+        <line x1="348" y1="110" x2="348" y2="170" stroke="#ef4444" stroke-width="0.8" stroke-dasharray="2,2"/>
+        <text x="348" y="101" font-family="'Space Grotesk'" font-size="7.5" font-weight="600" fill="#e2e8f0" text-anchor="middle">Mars</text>
+        <text x="348" y="182" font-family="'Space Grotesk'" font-size="6.5" font-weight="700" fill="#00f0ff" text-anchor="middle">1.52 AU</text>
+        <text x="348" y="192" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">228M km</text>
+
+        <!-- MAIN ASTEROID BELT (CERES) -->
+        <g opacity="0.7">
+          <rect x="390" y="55" width="26" height="170" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" stroke-dasharray="2,3"/>
+          <circle cx="395" cy="90" r="1" fill="#cbd5e1"/>
+          <circle cx="406" cy="115" r="1.2" fill="#cbd5e1"/>
+          <circle cx="401" cy="140" r="2.0" fill="#fcd34d" stroke="#f59e0b" stroke-width="0.6"/> <!-- Ceres -->
+          <circle cx="410" cy="165" r="1" fill="#cbd5e1"/>
+          <circle cx="396" cy="190" r="1.2" fill="#cbd5e1"/>
+          <circle cx="408" cy="210" r="0.8" fill="#cbd5e1"/>
+          <text x="403" y="48" font-family="'Space Grotesk'" font-size="6" fill="#fbbf24" text-anchor="middle">CERES</text>
+          <text x="403" y="235" font-family="'Space Grotesk'" font-size="6" fill="#64748b" text-anchor="middle">ASTEROIDS</text>
+        </g>
+
+        <!-- 5. JUPITER (5.204 AU / 778.5M KM) -->
+        <circle cx="490" cy="140" r="21" fill="url(#jovianGrad)" stroke="#d97706" stroke-width="1.2"/>
+        <!-- Great Red Spot Storm -->
+        <ellipse cx="498" cy="146" rx="5" ry="3" fill="#dc2626" opacity="0.95"/>
+        <line x1="490" y1="80" x2="490" y2="200" stroke="#f59e0b" stroke-width="0.8" stroke-dasharray="2,2"/>
+        <text x="490" y="70" font-family="'Space Grotesk'" font-size="8.5" font-weight="700" fill="#fbbf24" text-anchor="middle">Jupiter</text>
+        <text x="490" y="214" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#00f0ff" text-anchor="middle">5.20 AU</text>
+        <text x="490" y="225" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">778M km</text>
+
+        <!-- 6. SATURN (9.582 AU / 1.433B KM) -->
+        <!-- Angled Dual Rings with Cassini Division -->
+        <ellipse cx="605" cy="140" rx="30" ry="8" fill="none" stroke="url(#saturnRingGrad)" stroke-width="4"/>
+        <ellipse cx="605" cy="140" rx="23" ry="6" fill="none" stroke="rgba(20, 15, 10, 0.9)" stroke-width="1"/>
+        <circle cx="605" cy="140" r="15" fill="#ca8a04" stroke="#eab308" stroke-width="0.8"/>
+        <line x1="605" y1="85" x2="605" y2="195" stroke="#ca8a04" stroke-width="0.8" stroke-dasharray="2,2"/>
+        <text x="605" y="75" font-family="'Space Grotesk'" font-size="8.5" font-weight="700" fill="#fde047" text-anchor="middle">Saturn</text>
+        <text x="605" y="210" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#00f0ff" text-anchor="middle">9.58 AU</text>
+        <text x="605" y="221" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">1.43B km</text>
+
+        <!-- 7. URANUS (19.20 AU / 2.872B KM) - ICONIC VERTICAL RINGS (97.8° TILT) -->
+        <ellipse cx="715" cy="140" rx="4" ry="21" fill="none" stroke="#67e8f9" stroke-width="1.8" stroke-opacity="0.85" transform="rotate(-15 715 140)"/>
+        <circle cx="715" cy="140" r="11" fill="#06b6d4" stroke="#67e8f9" stroke-width="0.8"/>
+        <line x1="715" y1="95" x2="715" y2="185" stroke="#06b6d4" stroke-width="0.8" stroke-dasharray="2,2"/>
+        <text x="715" y="85" font-family="'Space Grotesk'" font-size="8" font-weight="700" fill="#67e8f9" text-anchor="middle">Uranus</text>
+        <text x="715" y="198" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#00f0ff" text-anchor="middle">19.2 AU</text>
+        <text x="715" y="209" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">2.87B km (97.8° TILT)</text>
+
+        <!-- 8. NEPTUNE (30.05 AU / 4.495B KM) -->
+        <circle cx="820" cy="140" r="11" fill="#2563eb" stroke="#60a5fa" stroke-width="0.8"/>
+        <!-- Supersonic White Cirrus Streaks -->
+        <path d="M 813 138 Q 820 136 827 138" stroke="#ffffff" stroke-width="0.8" fill="none" opacity="0.75"/>
+        <line x1="820" y1="95" x2="820" y2="185" stroke="#2563eb" stroke-width="0.8" stroke-dasharray="2,2"/>
+        <text x="820" y="85" font-family="'Space Grotesk'" font-size="8" font-weight="700" fill="#93c5fd" text-anchor="middle">Neptune</text>
+        <text x="820" y="198" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#00f0ff" text-anchor="middle">30.1 AU</text>
+        <text x="820" y="209" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">4.50B km</text>
+
+        <!-- KUIPER BELT & HELIOPAUSE THRESHOLD -->
+        <g opacity="0.6">
+          <circle cx="880" cy="140" r="2.2" fill="#c084fc" stroke="#e9d5ff" stroke-width="0.5"/> <!-- Pluto -->
+          <line x1="880" y1="120" x2="880" y2="160" stroke="#c084fc" stroke-width="0.6" stroke-dasharray="2,2"/>
+          <text x="880" y="112" font-family="'Space Grotesk'" font-size="6" fill="#c084fc" text-anchor="middle">PLUTO</text>
+          <text x="880" y="172" font-family="'Space Grotesk'" font-size="5.5" fill="#a855f7" text-anchor="middle">39.5 AU</text>
+
+          <!-- Voyager 1 Interstellar Horizon -->
+          <line x1="930" y1="30" x2="930" y2="250" stroke="#38bdf8" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+          <text x="930" y="262" font-family="'Space Grotesk'" font-size="6" fill="#38bdf8" text-anchor="middle">VOYAGER 1</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- VIEW 2: THE ENTIRE OBSERVABLE UNIVERSE COSMIC SCALE LADDER (PRETTY SVG) -->
+    <div id="atlas-view-universe" style="display: none;">
+      <svg viewBox="0 0 960 280" style="width: 100%; height: auto; background: radial-gradient(circle at 80% 50%, rgba(20, 10, 45, 0.95), rgba(3, 7, 18, 0.98)); border-radius: 14px; border: 1px solid rgba(176, 38, 255, 0.35); box-shadow: inset 0 0 30px rgba(176, 38, 255, 0.1);">
+        <defs>
+          <linearGradient id="universeLadderGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#00f0ff"/>
+            <stop offset="25%" stop-color="#00ff88"/>
+            <stop offset="50%" stop-color="#f59e0b"/>
+            <stop offset="75%" stop-color="#b026ff"/>
+            <stop offset="100%" stop-color="#ff0055"/>
+          </linearGradient>
+          <radialGradient id="cmbBubbleGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffeaa7"/>
+            <stop offset="40%" stop-color="#e17055"/>
+            <stop offset="75%" stop-color="#0984e3"/>
+            <stop offset="100%" stop-color="#2d3436"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Cosmic Scale Header Bar -->
+        <text x="480" y="32" font-family="'Space Grotesk'" font-size="8" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.2em">
+          THE COMPLETE OBSERVABLE UNIVERSE CHRONOLOGY &amp; SPATIAL SCALE (10¹¹ m → 10²⁶ m)
+        </text>
+
+        <!-- Logarithmic Scale Progression Axis -->
+        <path d="M 60 140 Q 280 135 500 130 T 910 120" fill="none" stroke="url(#universeLadderGrad)" stroke-width="3" opacity="0.85"/>
+
+        <!-- 1. Solar System Core (10^11 m) -->
+        <g transform="translate(70, 140)">
+          <circle cx="0" cy="0" r="14" fill="rgba(0, 240, 255, 0.15)" stroke="#00f0ff" stroke-width="1.5"/>
+          <circle cx="0" cy="0" r="4" fill="#00f0ff"/>
+          <line x1="0" y1="-14" x2="0" y2="-55" stroke="#00f0ff" stroke-width="0.8"/>
+          <text x="0" y="-62" font-family="'Space Grotesk'" font-size="7.5" font-weight="700" fill="#00f0ff" text-anchor="middle">SOLAR CORE</text>
+          <text x="0" y="28" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle">10¹¹ m</text>
+          <text x="0" y="40" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">8 Light-Min</text>
+        </g>
+
+        <!-- 2. Oort Cloud Frontier (10^16 m) -->
+        <g transform="translate(190, 138)">
+          <circle cx="0" cy="0" r="14" fill="rgba(0, 255, 136, 0.15)" stroke="#00ff88" stroke-width="1.5"/>
+          <circle cx="0" cy="0" r="4" fill="#00ff88"/>
+          <line x1="0" y1="14" x2="0" y2="55" stroke="#00ff88" stroke-width="0.8"/>
+          <text x="0" y="65" font-family="'Space Grotesk'" font-size="7.5" font-weight="700" fill="#00ff88" text-anchor="middle">OORT CLOUD</text>
+          <text x="0" y="77" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">1.6 Light-Years</text>
+          <text x="0" y="-20" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle">10¹⁶ m</text>
+        </g>
+
+        <!-- 3. Orion Spur (Sol-3) (10^18 m) -->
+        <g transform="translate(310, 135)">
+          <circle cx="0" cy="0" r="14" fill="rgba(251, 191, 36, 0.15)" stroke="#fbbf24" stroke-width="1.5"/>
+          <circle cx="0" cy="0" r="4" fill="#fbbf24"/>
+          <line x1="0" y1="-14" x2="0" y2="-55" stroke="#fbbf24" stroke-width="0.8"/>
+          <text x="0" y="-62" font-family="'Space Grotesk'" font-size="7.5" font-weight="700" fill="#fbbf24" text-anchor="middle">ORION SPUR</text>
+          <text x="0" y="28" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle">10¹⁸ m</text>
+          <text x="0" y="40" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">3,000 LY</text>
+        </g>
+
+        <!-- 4. Milky Way Galaxy (10^21 m) -->
+        <g transform="translate(430, 132)">
+          <circle cx="0" cy="0" r="16" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" stroke-width="1.5"/>
+          <ellipse cx="0" cy="0" rx="12" ry="5" fill="none" stroke="#f59e0b" stroke-width="1" transform="rotate(-20)"/>
+          <circle cx="0" cy="0" r="3.5" fill="#ffffff"/>
+          <line x1="0" y1="16" x2="0" y2="55" stroke="#f59e0b" stroke-width="0.8"/>
+          <text x="0" y="65" font-family="'Space Grotesk'" font-size="7.5" font-weight="700" fill="#f59e0b" text-anchor="middle">MILKY WAY</text>
+          <text x="0" y="77" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">100,000 LY</text>
+          <text x="0" y="-22" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle">10²¹ m</text>
+        </g>
+
+        <!-- 5. Local Galactic Group (10^22 m) -->
+        <g transform="translate(550, 129)">
+          <circle cx="0" cy="0" r="14" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="1.5"/>
+          <circle cx="-5" cy="-2" r="3" fill="#a855f7"/>
+          <circle cx="5" cy="3" r="3" fill="#c084fc"/>
+          <line x1="0" y1="-14" x2="0" y2="-55" stroke="#a855f7" stroke-width="0.8"/>
+          <text x="0" y="-62" font-family="'Space Grotesk'" font-size="7.5" font-weight="700" fill="#a855f7" text-anchor="middle">LOCAL GROUP</text>
+          <text x="0" y="28" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle">10²² m</text>
+          <text x="0" y="40" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">10M LY</text>
+        </g>
+
+        <!-- 6. Laniakea Supercluster (10^24 m) -->
+        <g transform="translate(670, 126)">
+          <circle cx="0" cy="0" r="16" fill="rgba(217, 70, 239, 0.2)" stroke="#d946ef" stroke-width="1.5"/>
+          <circle cx="0" cy="0" r="5" fill="#d946ef"/>
+          <line x1="0" y1="16" x2="0" y2="55" stroke="#d946ef" stroke-width="0.8"/>
+          <text x="0" y="65" font-family="'Space Grotesk'" font-size="7.5" font-weight="700" fill="#d946ef" text-anchor="middle">LANIAKEA</text>
+          <text x="0" y="77" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">520M LY (Attractor)</text>
+          <text x="0" y="-22" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle">10²⁴ m</text>
+        </g>
+
+        <!-- 7. Cosmic Web Filaments (10^25 m) -->
+        <g transform="translate(785, 123)">
+          <circle cx="0" cy="0" r="16" fill="rgba(236, 72, 153, 0.2)" stroke="#ec4899" stroke-width="1.5"/>
+          <!-- Filament Web Network Inside -->
+          <line x1="-8" y1="-8" x2="8" y2="8" stroke="#ec4899" stroke-width="1"/>
+          <line x1="-8" y1="8" x2="8" y2="-8" stroke="#ec4899" stroke-width="1"/>
+          <circle cx="0" cy="0" r="3" fill="#ffffff"/>
+          <line x1="0" y1="-16" x2="0" y2="-55" stroke="#ec4899" stroke-width="0.8"/>
+          <text x="0" y="-62" font-family="'Space Grotesk'" font-size="7.5" font-weight="700" fill="#ec4899" text-anchor="middle">COSMIC WEB</text>
+          <text x="0" y="28" font-family="'Space Grotesk'" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle">10²⁵ m</text>
+          <text x="0" y="40" font-family="'Space Grotesk'" font-size="6" fill="#94a3b8" text-anchor="middle">2B LY</text>
+        </g>
+
+        <!-- 8. Observable Universe Horizon Bubble (10^26 m) -->
+        <g transform="translate(895, 120)">
+          <circle cx="0" cy="0" r="22" fill="url(#cmbBubbleGrad)" stroke="#ff0055" stroke-width="2"/>
+          <circle cx="0" cy="0" r="28" fill="none" stroke="#00f0ff" stroke-width="1" stroke-dasharray="3,3" opacity="0.8"/>
+          <line x1="0" y1="28" x2="0" y2="55" stroke="#ff0055" stroke-width="0.8"/>
+          <text x="0" y="65" font-family="'Space Grotesk'" font-size="8" font-weight="700" fill="#ff0055" text-anchor="middle">CMB HORIZON</text>
+          <text x="0" y="77" font-family="'Space Grotesk'" font-size="6" font-weight="700" fill="#00ff88" text-anchor="middle">93.0B LY (z=1100)</text>
+          <text x="0" y="-34" font-family="'Space Grotesk'" font-size="7.5" font-weight="700" fill="#ffffff" text-anchor="middle">10²⁶ m</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Scientific Matrix Telemetry Table -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; font-size: 8pt;">
+      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px;">
+        <div style="color: var(--accent-cyan); font-weight: 700; margin-bottom: 4px;">TERRESTRIAL BODIES</div>
+        <div>Mercury, Venus, Earth, Mars</div>
+        <div style="color: #64748b; margin-top: 4px; line-height: 1.4;">Silicate rock, metallic nickel-iron core, high density (>3.9 g/cm³), and Circumstellar Goldilocks Zone.</div>
+      </div>
+      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px;">
+        <div style="color: #fbbf24; font-weight: 700; margin-bottom: 4px;">GAS &amp; ICE GIANTS</div>
+        <div>Jupiter, Saturn, Uranus, Neptune</div>
+        <div style="color: #64748b; margin-top: 4px; line-height: 1.4;">Metallic liquid hydrogen mantles, Cassini ring architecture, and Uranus's iconic 97.8° axial tilt vertical ring system.</div>
+      </div>
+      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px;">
+        <div style="color: #c084fc; font-weight: 700; margin-bottom: 4px;">COSMIC DISTANCE LADDER</div>
+        <div>AU · Light-Years · Gigaparsecs</div>
+        <div style="color: #64748b; margin-top: 4px; line-height: 1.4;">From Earth's 1.000 AU (8.3 light minutes) to the 93.0 Billion Light-Year Cosmic Microwave Horizon at z = 1100.</div>
+      </div>
+      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(0, 255, 136, 0.3); border-radius: 8px; padding: 12px;">
+        <div style="color: #00ff88; font-weight: 700; margin-bottom: 4px;">TERRA SPECIFICATION</div>
+        <div>Sol-3 (Earth &amp; Luna)</div>
+        <div style="color: #64748b; margin-top: 4px; line-height: 1.4;">Active geodynamo magnetosphere, liquid H₂O oceans, N₂-O₂ atmosphere, supporting active planetary civilization.</div>
+      </div>
+    </div>
+
+    <!-- Bottom Action Row with Return Button -->
+    <div style="text-align: center; margin-top: 4px;">
+      <button class="modal-footer-close-btn" onclick="closeDiagramModal()">
+        ✕ RETURN TO 3D SIMULATION [ESC]
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     AETHER VIP SECURITY OVERLAY: CHARDONNAY TRAP (SLAPSTICK EJECTION)
+     ============================================================ -->
+<div id="chardonnay-security-overlay" class="chardonnay-sec-overlay" style="display: none;">
+  <!-- Security Scanlines & Vignette -->
+  <div class="sec-scanlines"></div>
+  <div class="sec-vignette"></div>
+
+  <!-- Security Header Box -->
+  <div class="sec-dialog-box">
+    <div class="sec-badge">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+      AETHER CRITICAL SECURITY BREACH // LEVEL OMEGA
+    </div>
+    <h1 id="chardonnay-sec-title" class="sec-title">DRUNKIE DETECTED</h1>
+    <div id="chardonnay-sec-sub" class="sec-sub">SECURITY INFRACTION // UNLAWFUL INEBRIATION IN VIP SECTOR</div>
+  </div>
+
+  <!-- Comedic Ejection Slapstick Stage -->
+  <div id="chardonnay-ejection-stage" class="sec-ejection-stage" style="display: none;">
+    <svg class="ejection-svg" viewBox="0 0 600 260" width="600" height="260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Slapstick floor shadow -->
+        <radialGradient id="kickShadowGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="rgba(0,0,0,0.6)"/>
+          <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Floor Line -->
+      <line x1="30" y1="210" x2="570" y2="210" stroke="rgba(255,0,60,0.3)" stroke-width="2" stroke-dasharray="6,4"/>
+      <ellipse cx="140" cy="214" rx="35" ry="6" fill="url(#kickShadowGrad)"/>
+      <ellipse cx="230" cy="214" rx="30" ry="5" fill="url(#kickShadowGrad)"/>
+
+      <!-- BOUNCER FIGURE (Left) -->
+      <g id="ejection-bouncer" class="bouncer-group">
+        <!-- Head -->
+        <circle cx="130" cy="90" r="16" fill="#ffffff"/>
+        <!-- Security Sunglasses line -->
+        <rect x="126" y="86" width="16" height="5" rx="1.5" fill="#000000"/>
+        <!-- Torso (broad shoulders) -->
+        <path d="M106,112 L154,112 L148,172 L112,172 Z" fill="#ffffff"/>
+        <!-- Tie -->
+        <polygon points="130,112 134,112 133,142 130,148 127,142" fill="#ff003c"/>
+        <!-- Left Standing Leg -->
+        <line x1="120" y1="172" x2="120" y2="210" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+        <!-- Right Kicking Leg (Pivots from hip at (140, 172)) -->
+        <g id="bouncer-kick-leg" class="kick-leg">
+          <line x1="140" y1="172" x2="175" y2="165" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
+          <!-- Heavy Boot delivering the kick -->
+          <path d="M172,160 L188,162 L186,174 L170,172 Z" fill="#ffd700"/>
+        </g>
+        <!-- Crossed/firm arms -->
+        <path d="M110,122 Q130,140 150,122" stroke="#ffffff" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <!-- Badge -->
+        <circle cx="116" cy="124" r="3" fill="#ffd700"/>
+      </g>
+
+      <!-- Comic Impact Starburst -->
+      <g id="comic-impact" class="comic-impact">
+        <polygon points="190,165 200,152 204,163 216,160 208,170 218,178 205,178 202,190 194,180 184,186 188,173 178,168" fill="#ffd700" stroke="#ff003c" stroke-width="2"/>
+        <text x="200" y="174" fill="#ff003c" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="11" text-anchor="middle">BAM!</text>
+      </g>
+
+      <!-- DRUNKIE FIGURE (Right - Gets kicked and flies off-screen) -->
+      <g id="ejection-drunkie" class="drunkie-group">
+        <!-- Head -->
+        <circle cx="240" cy="100" r="14" fill="#cbd5e1"/>
+        <!-- Dizzy eyes -->
+        <circle cx="236" cy="98" r="2.5" fill="#ff003c"/>
+        <circle cx="244" cy="98" r="2.5" fill="#ff003c"/>
+        <path d="M235,106 Q240,103 245,107" stroke="#000" stroke-width="1.5" fill="none"/>
+        <!-- Torso -->
+        <path d="M232,118 L256,122 L246,170 L226,168 Z" fill="#94a3b8"/>
+        <!-- Wine glass in hand -->
+        <path d="M256,130 L275,138" stroke="#cbd5e1" stroke-width="4" stroke-linecap="round"/>
+        <polygon points="274,130 286,130 280,142" fill="rgba(255,215,0,0.8)" stroke="#ffffff" stroke-width="1"/>
+        <line x1="280" y1="142" x2="280" y2="150" stroke="#ffffff" stroke-width="1.5"/>
+        <circle cx="288" cy="126" r="2" fill="#ffd700"/>
+        <circle cx="294" cy="132" r="1.5" fill="#ffd700"/>
+        <!-- Legs flailing -->
+        <line x1="230" y1="170" x2="225" y2="208" stroke="#64748b" stroke-width="6" stroke-linecap="round"/>
+        <line x1="244" y1="170" x2="252" y2="206" stroke="#64748b" stroke-width="6" stroke-linecap="round"/>
+        <!-- Speed streaks behind drunkie -->
+        <g class="speed-streaks">
+          <line x1="210" y1="120" x2="190" y2="120" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+          <line x1="205" y1="145" x2="180" y2="145" stroke="rgba(255,255,255,0.6)" stroke-width="2.5"/>
+          <line x1="215" y1="170" x2="195" y2="170" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+        </g>
+      </g>
+    </svg>
+    <div class="ejection-caption">
+      &gt;&gt; UNCEREMONIOUSLY DEFENESTRATED FROM EXECUTIVE LOUNGE &lt;&lt;
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     TIER 0: MASTER RUNTIME INTEGRATOR & COMPILER CHASSIS
+     Mounts all Tier 1 Presentation & WebGL Canvas Engine Modules
+     ============================================================ -->
+
+  <!-- TIER 1: Sound Engine (Web Audio Procedural Synthesizer) -->
+  <script defer src="tier1/js/audio.js"></script>
+
+  <!-- TIER 1: Graphics & Compute (Three.js WebGL 3D Particle Universe) -->
+  <script defer src="tier1/js/core.js"></script>
+
+  <!-- TIER 1: Presentation & Station UI Controllers -->
+  <script defer src="tier1/js/station1.js"></script>
+  <script defer src="tier1/js/station2.js"></script>
+  <script defer src="tier1/js/stations_3_9.js"></script>
+  <script defer src="tier1/js/station10.js"></script>
+
+  <!-- TIER 1: Chardonnay VIP Security Trap Controller -->
+  <script defer src="tier1/js/chardonnay.js"></script>
+
+  <!-- TIER 1: VIP Bank Account Machine Controller -->
+  <script defer src="tier1/js/bank_terminal.js"></script>
+
+  <!-- TIER 1: Application Navigation & 60 FPS Render Loop -->
+  <script defer src="tier1/js/app.js"></script>
+</body>
+</html>
