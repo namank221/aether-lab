@@ -1,0 +1,2024 @@
+/* ==========================================================================
+     SLIDES 3 - 7: FIVE INTERACTIVE WEB LABS
+     ========================================================================== */
+  .lab-layout {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px;
+    gap: 24px;
+    pointer-events: none;
+  }
+
+  .lab-layout > * {
+    pointer-events: auto;
+  }
+
+  .info-briefing-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 26px 30px;
+    width: 420px;
+    max-height: 82vh;
+    backdrop-filter: blur(28px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 25px var(--glass-glow);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    border-left: 3px solid var(--accent-cyan);
+  }
+
+  .info-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 7.5pt;
+    font-weight: 700;
+    color: var(--accent-gold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .info-title {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.04em;
+    font-size: 14pt;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.06em;
+  }
+
+  .info-concept {
+    font-size: 8.5pt;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .info-metric-card {
+    background: rgba(3, 7, 18, 0.7);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt;
+    color: #cbd5e1;
+    line-height: 1.7;
+  }
+
+  .info-pill-tag {
+    display: inline-block;
+    background: rgba(0, 240, 255, 0.15);
+    border: 1px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 7pt;
+    font-weight: 700;
+    margin-right: 6px;
+  }
+
+  .lab-control-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    width: 440px;
+    backdrop-filter: blur(28px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 25px var(--glass-glow);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .lab-tag {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 8pt;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    letter-spacing: 0.2em;
+  }
+
+  .lab-title {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.04em;
+    font-size: 17pt;
+    color: #ffffff;
+    letter-spacing: 0.08em;
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .control-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 8pt;
+    color: var(--text-muted);
+  }
+
+  .control-label span:last-child {
+    color: var(--accent-cyan);
+    font-weight: 700;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .toggle-btn {
+    flex: 1;
+    min-width: 80px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: var(--text-muted);
+    font-family: 'Space Grotesk', monospace;
+    font-size: 7.5pt;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+  }
+
+  .toggle-btn:hover {
+    border-color: var(--accent-cyan);
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,240,255,0.3);
+  }
+
+  .toggle-btn.active {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(0, 240, 255, 0.1));
+    border-color: var(--accent-cyan);
+    color: #ffffff;
+    box-shadow: 0 0 14px rgba(0,240,255,0.5);
+  }
+
+  /* Lab 4: Live Glass Panel Preview */
+  .glass-preview-box {
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(20px);
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+
+  /* Slide 6: Kinetic Glassmorphism Panels & Optical Backdrop */
+  #slide-6 .lab-control-panel {
+    background: rgba(6, 12, 24, 0.64);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  #slide-6 .glass-preview-box {
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    user-select: none;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Central Floating Optical Glass Viewport */
+  .glass-center-lens {
+    flex: 1;
+    max-width: 320px;
+    height: 380px;
+    border-radius: 24px;
+    background: rgba(0, 240, 255, 0.06);
+    border: 1.5px solid rgba(0, 240, 255, 0.35);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.65), inset 0 0 35px rgba(0, 240, 255, 0.12), 0 0 30px rgba(0, 240, 255, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    pointer-events: none;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  }
+
+  .glass-center-lens::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 42%, rgba(0,240,255,0.08) 100%);
+    pointer-events: none;
+  }
+
+  .lens-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .lens-tag {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 8pt;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    letter-spacing: 0.16em;
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+  }
+
+  .lens-metric {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5pt;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+  }
+
+  /* Magnetic Spring Button with Real-Time Newtonian Physics */
+  .magnetic-btn {
+    position: relative;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.28), rgba(176, 38, 255, 0.28));
+    border: 1.5px solid var(--accent-cyan);
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-family: 'Space Grotesk';
+    font-weight: 700;
+    font-size: 8.5pt;
+    letter-spacing: 0.1em;
+    cursor: grab;
+    box-shadow: 0 0 20px var(--glass-glow);
+    transition: box-shadow 0.2s, background 0.3s;
+    will-change: transform;
+    user-select: none;
+    touch-action: none;
+  }
+
+  .magnetic-btn:active {
+    cursor: grabbing;
+  }
+
+  /* ==========================================================================
+     SLIDES 8 & 9: COMPLEX INTERACTIVE TELEMETRY CHARTS
+     ========================================================================== */
+  /* ==========================================================================
+     SLIDE 8 & 9: ADVANCED PRECISION TELEMETRY CHARTS & HARDWARE PROFILER
+     CFTD RECIPE A: DARK SCIENTIFIC INTERFACE (EXPANSIVE SYMMETRICAL COCKPIT)
+     ========================================================================== */
+  .chart-screen-container {
+    width: 100%;
+    max-width: 1380px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 20;
+    box-sizing: border-box;
+  }
+
+  .chart-card-wrapper {
+    width: min(1380px, 94vw);
+    max-width: 1380px;
+    background: radial-gradient(135% 100% at 50% 0%, rgba(10, 20, 38, 0.86) 0%, rgba(4, 8, 16, 0.95) 100%);
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    border-radius: 16px;
+    padding: 16px 24px;
+    backdrop-filter: blur(28px) saturate(180%);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.90), 0 0 35px rgba(0, 240, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    z-index: 10;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  /* Aerospace Registration Crosshairs */
+  .hud-corner-mark {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(0, 240, 255, 0.45);
+    pointer-events: none;
+    line-height: 1;
+  }
+  .hud-corner-mark.top-left { top: 8px; left: 10px; }
+  .hud-corner-mark.top-right { top: 8px; right: 10px; }
+  .hud-corner-mark.bottom-left { bottom: 8px; left: 10px; }
+  .hud-corner-mark.bottom-right { bottom: 8px; right: 10px; }
+
+  .chart-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .chart-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .chart-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15.5pt;
+    color: #ffffff;
+    letter-spacing: 0.04em;
+    margin: 3px 0 2px 0;
+    line-height: 1.2;
+  }
+
+  .chart-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt;
+    color: #64748b;
+    letter-spacing: 0.02em;
+  }
+
+  .chart-control-cluster {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+  }
+
+  .control-group-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7pt;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .stage-jump-pills {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .jump-pill {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #94a3b8;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 6px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    outline: none;
+  }
+
+  .jump-pill:hover {
+    border-color: rgba(0, 240, 255, 0.5);
+    color: #ffffff;
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .jump-pill.active {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.22) 0%, rgba(176, 38, 255, 0.18) 100%);
+    border-color: #00f0ff;
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
+  }
+
+  .jump-pill.stress-btn {
+    border-color: rgba(255, 215, 0, 0.35);
+    color: #ffd700;
+  }
+  .jump-pill.stress-btn:hover {
+    border-color: #ffd700;
+    box-shadow: 0 0 16px rgba(255, 215, 0, 0.35);
+    color: #ffffff;
+  }
+
+  .live-dot-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00ff88;
+    box-shadow: 0 0 8px #00ff88;
+    animation: pulseLiveDot 1.4s infinite ease-in-out;
+  }
+
+  @keyframes pulseLiveDot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.7); opacity: 0.35; }
+  }
+
+  /* Cosmic Telemetry HUD (Slide 8) */
+  .cosmic-telemetry-hud {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: rgba(3, 7, 18, 0.72);
+    border: 1px solid rgba(0, 240, 255, 0.18);
+    border-radius: 8px;
+    padding: 8px 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .hud-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hud-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .hud-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.5pt;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .hud-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #f1f5f9;
+  }
+
+  .hud-val.highlight {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+  }
+
+  .hud-bars-container {
+    flex: 1;
+  }
+
+  .mini-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt;
+  }
+
+  .mini-bar-track {
+    flex: 1;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .mini-bar-fill {
+    height: 100%;
+    transition: width 0.35s ease;
+  }
+
+  /* Monumental Hero Chart Box (Slide 8: 480px) */
+  #box-cosmic-canvas {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    min-height: 350px;
+  }
+
+  /* 4 Interactive Component Cards Grid (Slide 8) */
+  .cosmic-components-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+
+  .interactive-component-card {
+    background: rgba(8, 14, 28, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .interactive-component-card:hover {
+    border-color: rgba(0, 240, 255, 0.45);
+    background: rgba(12, 22, 44, 0.88);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+  }
+
+  .interactive-component-card.isolated {
+    border-color: #00f0ff;
+    background: rgba(0, 240, 255, 0.12);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+  }
+
+  .interactive-component-card.dimmed {
+    opacity: 0.38;
+    filter: grayscale(40%);
+  }
+
+  .card-glow-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .card-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.5pt;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #94a3b8;
+  }
+
+  .card-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5pt;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.1;
+  }
+
+  .card-desc {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.5pt;
+    color: #64748b;
+    line-height: 1.3;
+  }
+
+  .card-action-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6pt;
+    color: #00f0ff;
+    letter-spacing: 0.08em;
+    margin-top: 3px;
+    opacity: 0.85;
+  }
+
+  /* Dual Telemetry Cockpit (Slide 9: 55% / 45% Symmetrical Split) */
+  #grid-perf-cockpit {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 16px;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .telemetry-panel-box {
+    background: rgba(4, 9, 20, 0.60);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .panel-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .panel-box-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 8pt;
+    font-weight: 700;
+    color: #cbd5e1;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .panel-indicator-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .panel-status-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7pt;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(0, 255, 136, 0.12);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    color: #00ff88;
+    transition: all 0.2s ease;
+  }
+
+  .panel-status-pill.warning {
+    background: rgba(255, 0, 60, 0.2);
+    border-color: #ff003c;
+    color: #ff003c;
+    animation: warningGlow 0.6s infinite alternate;
+  }
+
+  @keyframes warningGlow {
+    from { box-shadow: 0 0 4px rgba(255, 0, 60, 0.3); }
+    to { box-shadow: 0 0 16px rgba(255, 0, 60, 0.8); }
+  }
+
+  #box-stream-canvas {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    min-height: 220px;
+    max-height: 220px;
+  }
+
+  #box-radar-canvas {
+    position: relative;
+    width: 100%;
+    height: 165px;
+    min-height: 165px;
+    max-height: 165px;
+  }
+
+  .radar-micro-vitals {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: rgba(2, 6, 16, 0.65);
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-top: auto;
+  }
+
+  .vital-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .vital-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.5pt;
+    font-weight: 700;
+    color: #64748b;
+  }
+
+  .vital-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #00f0ff;
+  }
+
+  /* Symmetrical 4-Pillar Health Dock (Slide 9) */
+  .perf-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+
+  .perf-stat-card {
+    background: rgba(8, 14, 28, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .perf-stat-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .perf-stat-lbl {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 7.5pt;
+    font-weight: 700;
+    color: #cbd5e1;
+    letter-spacing: 0.04em;
+  }
+
+  .perf-stat-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.5pt;
+    color: #64748b;
+  }
+
+  .perf-stat-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5pt;
+    font-weight: 700;
+    color: #00f0ff;
+    line-height: 1.1;
+  }
+
+  .perf-progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+
+  .perf-progress-fill {
+    height: 100%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+  }
+
+  /* ==========================================================================
+     SLIDE 10: THE SPECIAL SAUCE (OBSERVER SINGULARITY)
+     ========================================================================== */
+  .singularity-overlay {
+    background: var(--glass-bg);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    border-radius: 20px;
+    padding: 36px 44px;
+    width: 580px;
+    backdrop-filter: blur(32px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 40px rgba(255, 215, 0, 0.25);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: auto;
+  }
+/* ==========================================================================
+   STATION 11: SECRET VIP EXECUTIVE LOUNGE (DEDICATED SLIDE)
+   ========================================================================== */
+#slide-11 {
+  display: none;
+  width: 100%;
+  height: 100%;
+  padding: 40px 32px 100px 32px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+#slide-11.active {
+  display: flex;
+}
+
+.vip-slide-container {
+  width: 100%;
+  max-width: 1080px;
+  background: rgba(8, 12, 22, 0.94);
+  border: 1.5px solid var(--accent-gold);
+  border-radius: 20px;
+  padding: 34px 40px;
+  backdrop-filter: blur(40px);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 50px rgba(255, 215, 0, 0.25);
+  position: relative;
+  z-index: 10;
+}
+
+.vip-slide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  padding-bottom: 16px;
+}
+
+.vip-nav-tabs {
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  padding-bottom: 14px;
+  margin-bottom: 24px;
+}
+
+.vip-tab {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9pt;
+  font-weight: 600;
+  color: var(--accent-gold);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.03em;
+}
+
+.vip-tab:hover {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: var(--accent-gold);
+}
+
+.vip-tab.active {
+  background: var(--accent-gold);
+  color: #020408;
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.5);
+  border-color: var(--accent-gold);
+}
+
+/* VIP Suite Changing Slider Strip */
+.vip-suite-slider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  flex-wrap: wrap;
+}
+
+.vip-slider-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.vip-suite-slider-btn {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: var(--accent-gold);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.02em;
+}
+
+.vip-suite-slider-btn:hover:not(.active) {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: var(--accent-gold);
+}
+
+.vip-suite-slider-btn.active {
+  background: var(--accent-gold);
+  color: #020408;
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.45);
+  border-color: var(--accent-gold);
+  cursor: default;
+}
+
+.vip-suite-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 24px 28px;
+}
+
+.vip-placeholder-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.vip-sub-card {
+  background: rgba(2, 6, 23, 0.65);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 18px 16px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.vip-sub-card:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(15, 23, 42, 0.75);
+}
+
+  /* ==========================================================================
+     FLOATING COCKPIT FOOTER DOCK
+     ========================================================================== */
+  #cockpit-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 10px 24px;
+    backdrop-filter: blur(24px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 8pt;
+    color: var(--text-muted);
+  }
+
+  .fps-pill {
+    color: var(--accent-emerald);
+    font-weight: 700;
+    font-size: 9pt;
+  }
+
+  .footer-pills {
+    display: flex;
+    gap: 8px;
+  }
+
+  .slide-pill {
+    width: 38px;
+    height: 28px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 8pt;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .slide-pill:hover:not(.locked) {
+    border-color: var(--accent-cyan);
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+  }
+
+  .slide-pill.active {
+    background: linear-gradient(135deg, var(--accent-cyan), #0099cc);
+    color: #020408;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.7);
+  }
+
+  .slide-pill.locked {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .vip-pill {
+    width: auto;
+    padding: 0 14px;
+    background: rgba(255, 215, 0, 0.15);
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    display: none;
+  }
+
+  .vip-pill.unlocked {
+    display: flex;
+  }
+
+  .vip-pill.active {
+    background: var(--accent-gold) !important;
+    color: #020408 !important;
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.7) !important;
+    border-color: var(--accent-gold) !important;
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 8pt;
+  }
+
+  /* Real-time Spectrogram in Footer */
+  #mini-spectrogram {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 20px;
+    width: 50px;
+  }
+
+  .spec-bar {
+    width: 5px;
+    height: 4px;
+    background: var(--accent-cyan);
+    border-radius: 1px;
+    transition: height 0.05s ease;
+  }
+
+  /* ==========================================================================
+     CFTD SYSTEM OVERRIDES V3 — DISCIPLINED COCKPIT GRID & 3D ISOLATION
+     1. Footer & Header attached 100% flush to screen edges (Zero gap)
+     2. No box gaps: Tight content-hugging containers
+     3. Slides 8-9: One-view access (No scrollbar / sliding icon)
+     4. Artifacts far to the RIGHT, Analytics far to the LEFT (Zero collision)
+     5. Cosmos Bar fully restored & slideable on command
+     ========================================================================== */
+
+  /* 1. Master Viewport Frame */
+  #ui-layer {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 44px 0 44px 0 !important;
+    margin: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* 2. Top Header: Exactly Flush to Top Edge (Zero gap) */
+  .top-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 44px !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+    background: rgba(6, 11, 22, 0.96) !important;
+    backdrop-filter: blur(16px) !important;
+    padding: 0 24px !important;
+    z-index: 1000 !important;
+    pointer-events: auto !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(56, 189, 248, 0.15) !important;
+  }
+
+  /* 3. Bottom Footer: Exactly Attached to Bottommost Screen Edge (Zero gap) */
+  #cockpit-footer,
+  .bottom-footer {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 44px !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: 1px solid var(--glass-border) !important;
+    background: rgba(6, 11, 22, 0.96) !important;
+    backdrop-filter: blur(16px) !important;
+    padding: 0 24px !important;
+    z-index: 1000 !important;
+    pointer-events: auto !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.6), 0 -1px 0 rgba(56, 189, 248, 0.15) !important;
+  }
+
+  .slide-pill.active {
+    background: var(--accent-cyan) !important;
+    color: #030712 !important;
+    box-shadow: 0 0 12px var(--accent-cyan) !important;
+    font-weight: 800 !important;
+  }
+
+  /* 4. Slides 3–7: Analytics strictly on LEFT, 3D Artifacts far on RIGHT (Zero collision) */
+  .lab-layout {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Left Analytics & Control Rail: Content-hugging, no empty bottom gap */
+  .lab-control-panel {
+    position: fixed !important;
+    left: 28px !important;
+    top: 58px !important;
+    bottom: auto !important;
+    height: auto !important;
+    width: 290px !important;
+    max-width: 290px !important;
+    max-height: calc(100vh - 120px) !important;
+    overflow-y: auto !important;
+    padding: 14px 16px !important;
+    background: rgba(11, 17, 32, 0.85) !important;
+    border: 1px solid rgba(56, 189, 248, 0.22) !important;
+    border-radius: 12px !important;
+    backdrop-filter: blur(16px) !important;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 16px rgba(0, 240, 255, 0.10) !important;
+    gap: 7px !important;
+    pointer-events: auto !important;
+    z-index: 20 !important;
+  }
+
+  .lab-control-panel::-webkit-scrollbar {
+    width: 3px;
+  }
+  .lab-control-panel::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, 0.3);
+    border-radius: 3px;
+  }
+
+  /* Right Specs Briefing Panel: Minimized to far right edge drawer so 3D Artifact has 100% clear view */
+  .info-briefing-panel {
+    position: fixed !important;
+    right: 28px !important;
+    top: 58px !important;
+    bottom: auto !important;
+    height: auto !important;
+    width: 260px !important;
+    max-width: 260px !important;
+    max-height: calc(100vh - 120px) !important;
+    overflow-y: auto !important;
+    padding: 14px 16px !important;
+    background: rgba(11, 17, 32, 0.65) !important;
+    border: 1px solid rgba(56, 189, 248, 0.15) !important;
+    border-radius: 12px !important;
+    backdrop-filter: blur(12px) !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5) !important;
+    gap: 7px !important;
+    pointer-events: auto !important;
+    z-index: 20 !important;
+    border-left: 3px solid var(--accent-cyan) !important;
+    opacity: 0.85 !important;
+    transition: opacity 0.2s ease !important;
+  }
+
+  .info-briefing-panel:hover {
+    opacity: 1 !important;
+  }
+
+  .info-briefing-panel::-webkit-scrollbar {
+    width: 3px;
+  }
+  .info-briefing-panel::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, 0.3);
+    border-radius: 3px;
+  }
+
+  /* 5. Slides 8 & 9: ONE VIEW ACCESS (Zero Scrollbar / Zero Sliding Icon) & Far Apart */
+  /* Slide 8 & 9: Centered Symmetrical Full-Aperture Scientific Observatories */
+  #slide-8 .chart-screen-container,
+  #slide-9 .chart-screen-container {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: auto !important;
+    margin: 0 auto !important;
+  }
+
+  #slide-8 .chart-card-wrapper,
+  #slide-9 .chart-card-wrapper {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: min(1380px, 94vw) !important;
+    max-width: 1380px !important;
+    margin: 0 auto !important;
+    padding: 16px 24px !important;
+    gap: 10px !important;
+    pointer-events: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  #slide-8 #box-cosmic-canvas {
+    height: 350px !important;
+    min-height: 350px !important;
+  }
+
+  /* Slide 6: Central Optical Glass Prism / Mirror Lens positioned directly around the 3D Gyroscope Artifact */
+  #slide-6 .glass-center-lens {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 440px !important;
+    max-width: 440px !important;
+    height: 460px !important;
+    margin: 0 !important;
+    border-radius: 28px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    padding: 24px !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+    z-index: 15 !important;
+    --lens-blur: 24px;
+    --lens-border-alpha: 0.35;
+    --lens-tint-r: 0;
+    --lens-tint-g: 240;
+    --lens-tint-b: 255;
+    background: radial-gradient(circle at 50% 35%, rgba(var(--lens-tint-r, 0), var(--lens-tint-g, 240), var(--lens-tint-b, 255), 0.12) 0%, rgba(var(--lens-tint-r, 0), var(--lens-tint-g, 240), var(--lens-tint-b, 255), 0.05) 60%, rgba(6, 12, 24, 0.45) 100%);
+    border: 1.5px solid rgba(var(--lens-tint-r, 0), var(--lens-tint-g, 240), var(--lens-tint-b, 255), var(--lens-border-alpha, 0.35));
+    backdrop-filter: blur(var(--lens-blur, 24px));
+    -webkit-backdrop-filter: blur(var(--lens-blur, 24px));
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7),
+                inset 0 0 40px rgba(var(--lens-tint-r, 0), var(--lens-tint-g, 240), var(--lens-tint-b, 255), 0.22),
+                0 0 35px rgba(var(--lens-tint-r, 0), var(--lens-tint-g, 240), var(--lens-tint-b, 255), calc(var(--lens-border-alpha, 0.35) * 0.7));
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #slide-6 .glass-center-lens::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.04) 35%, transparent 55%, rgba(var(--lens-tint-r, 0), var(--lens-tint-g, 240), var(--lens-tint-b, 255), 0.15) 100%);
+    pointer-events: none;
+    transform: rotate(12deg);
+    transition: background 0.3s ease;
+  }
+
+  #slide-6 .glass-center-lens::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 28px;
+    box-shadow: inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.45), inset -1.5px -1.5px 0 rgba(var(--lens-tint-r, 0), var(--lens-tint-g, 240), var(--lens-tint-b, 255), 0.35);
+    pointer-events: none;
+  }
+
+  /* Slide 9: Formatted Scientific Engineering Telemetry Sheet */
+  #slide-9 .chart-screen-container {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: auto !important;
+    margin: 0 auto !important;
+  }
+
+  #slide-9 .chart-card-wrapper {
+    position: relative !important;
+    width: min(1360px, 94vw) !important;
+    max-width: 1360px !important;
+    margin: 0 auto !important;
+    padding: 16px 22px !important;
+    gap: 12px !important;
+    background: radial-gradient(135% 100% at 50% 0%, rgba(10, 20, 38, 0.90) 0%, rgba(4, 8, 16, 0.96) 100%) !important;
+    border: 1px solid rgba(0, 240, 255, 0.22) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.88), 0 0 30px rgba(0, 240, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+  }
+
+  #slide-9 .chart-top-bar {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 16px !important;
+  }
+
+  #slide-9 .chart-title {
+    font-size: 14pt !important;
+    margin: 2px 0 1px 0 !important;
+    line-height: 1.2 !important;
+  }
+
+  #slide-9 .chart-subtitle {
+    font-size: 7.5pt !important;
+  }
+
+  #slide-9 .dual-chart-grid,
+  #slide-9 #grid-perf-cockpit {
+    display: grid !important;
+    grid-template-columns: 1.45fr 1fr !important;
+    gap: 14px !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    align-items: stretch !important;
+    margin: 0 !important;
+  }
+
+  #slide-9 .telemetry-panel-box {
+    background: rgba(4, 9, 20, 0.65) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 10px !important;
+    padding: 12px 14px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    height: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #slide-9 #box-stream-canvas {
+    position: relative !important;
+    width: 100% !important;
+    height: 220px !important;
+    min-height: 220px !important;
+    max-height: 220px !important;
+    display: block !important;
+  }
+
+  #slide-9 #box-radar-canvas {
+    position: relative !important;
+    width: 100% !important;
+    height: 165px !important;
+    min-height: 165px !important;
+    max-height: 165px !important;
+    display: block !important;
+  }
+
+  #slide-9 .radar-micro-vitals {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    background: rgba(2, 6, 16, 0.72) !important;
+    border: 1px solid rgba(0, 240, 255, 0.12) !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    margin-top: auto !important;
+  }
+
+  #slide-9 .perf-stat-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 12px !important;
+    width: 100% !important;
+    margin-top: 2px !important;
+  }
+
+  #slide-9 .perf-stat-card {
+    background: rgba(8, 14, 28, 0.75) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    box-sizing: border-box !important;
+  }
+
+  #slide-9 .perf-stat-lbl {
+    font-size: 7pt !important;
+    font-weight: 700 !important;
+    color: #cbd5e1 !important;
+  }
+
+  #slide-9 .perf-stat-sub {
+    font-size: 6pt !important;
+    color: #64748b !important;
+  }
+
+  #slide-9 .perf-stat-val {
+    font-size: 12.5pt !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    margin: 1px 0 !important;
+  }
+
+  #slide-9 .perf-progress-bar {
+    height: 3.5px !important;
+    border-radius: 2px !important;
+    margin-top: 3px !important;
+  }
+
+  /* 6. Slide 2: COSMOS BAR RESTORED & DOCKED PROMINENTLY (Slide on own command) */
+  .cosmic-hud-container {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .cosmic-header-telemetry {
+    position: fixed !important;
+    top: 52px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 1120px !important;
+    max-width: 95vw !important;
+    z-index: 50 !important;
+    pointer-events: auto !important;
+    margin: 0 !important;
+    background: var(--bg-surface-1) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    padding: 8px 18px !important;
+    backdrop-filter: blur(16px) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  /* Both Bar 1 (Cosmic Macro Panel) and Bar 2 (Solar Explorer) docked right above bottom footer */
+  .cosmic-slider-panel {
+    position: fixed !important;
+    bottom: 52px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 1120px !important;
+    max-width: 95vw !important;
+    z-index: 50 !important;
+    pointer-events: auto !important;
+    background: rgba(8, 16, 32, 0.92) !important;
+    border: 1px solid rgba(0, 240, 255, 0.35) !important;
+    border-radius: 14px !important;
+    padding: 12px 22px !important;
+    backdrop-filter: blur(24px) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 24px rgba(0, 240, 255, 0.15) !important;
+    display: flex;
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin: 0 !important;
+  }
+
+  .solar-explorer-panel {
+    position: fixed !important;
+    bottom: 52px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 1120px !important;
+    max-width: 95vw !important;
+    z-index: 50 !important;
+    pointer-events: auto !important;
+    background: rgba(8, 16, 32, 0.92) !important;
+    border: 1px solid rgba(0, 240, 255, 0.35) !important;
+    border-radius: 14px !important;
+    padding: 12px 22px !important;
+    backdrop-filter: blur(24px) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 24px rgba(0, 240, 255, 0.15) !important;
+    display: none;
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin: 0 !important;
+  }
+
+  /* Slide 10: Singularity HUD Top-Center */
+  #slide-10 .singularity-overlay {
+    position: absolute !important;
+    top: 24px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    max-width: 500px !important;
+    width: 90% !important;
+    padding: 14px 24px !important;
+    margin: 0 !important;
+    background: radial-gradient(circle at center, rgba(11, 17, 32, 0.70) 0%, rgba(3, 7, 18, 0.45) 65%, transparent 100%) !important;
+    border: 1px solid rgba(0, 240, 255, 0.25) !important;
+    border-radius: 14px !important;
+    backdrop-filter: blur(12px) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(0, 240, 255, 0.15) !important;
+    pointer-events: none !important;
+  }
+
+  /* Tight Content Hugging (Eliminates unnatural box gaps) */
+  .param-group {
+    gap: 3px !important;
+  }
+  .button-row {
+    gap: 4px !important;
+  }
+  .capabilities-grid {
+    gap: 4px !important;
+  }
+
+
+/* ==========================================================================
+   AETHER ULTIMATE RESEARCH LABORATORY // AEROSPACE HUD VISUAL SYSTEM
+   ========================================================================== */
+
+/* 1. Global Viewport & Container Architecture */
+#ui-layer {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  overflow: hidden !important;
+}
+
+.slide-container {
+  position: absolute !important;
+  top: 64px !important;
+  bottom: 72px !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100vw !important;
+  height: calc(100vh - 136px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+.slide-panel {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* 2. Global Symmetrical Left-by-Right Floating Rails & Centered Viewfinder */
+.lab-layout {
+  position: absolute !important;
+  inset: 16px 24px !important;
+  width: calc(100% - 48px) !important;
+  height: calc(100% - 32px) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 0 !important;
+  pointer-events: none !important;
+  z-index: 20 !important;
+}
+
+.lab-control-panel {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  width: 310px !important;
+  min-width: 310px !important;
+  max-width: 310px !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  background: rgba(6, 14, 28, 0.72) !important;
+  border: 1px solid rgba(56, 189, 248, 0.18) !important;
+  border-radius: 18px !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  padding: 20px 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  pointer-events: auto !important;
+  z-index: 20 !important;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease !important;
+}
+.lab-control-panel::-webkit-scrollbar { display: none !important; }
+
+.info-briefing-panel {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  width: 310px !important;
+  min-width: 310px !important;
+  max-width: 310px !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  background: rgba(6, 14, 28, 0.72) !important;
+  border: 1px solid rgba(56, 189, 248, 0.18) !important;
+  border-radius: 18px !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  padding: 20px 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  pointer-events: auto !important;
+  z-index: 20 !important;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease !important;
+}
+.info-briefing-panel::-webkit-scrollbar { display: none !important; }
+
+/* Station Centerpiece Stage & Camera Viewfinder Reticle */
+.station-centerpiece-stage {
+  flex: 1 !important;
+  height: 100% !important;
+  margin: 0 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  pointer-events: none !important;
+}
+
+.centerpiece-reticle {
+  position: absolute !important;
+  inset: 10px !important;
+  border: 1px dashed rgba(56, 189, 248, 0.16) !important;
+  border-radius: 20px !important;
+  pointer-events: none !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  flex-direction: column !important;
+  padding: 14px 18px !important;
+  box-shadow: inset 0 0 30px rgba(0, 240, 255, 0.02) !important;
+}
+
+.reticle-corner-tl, .reticle-corner-tr, .reticle-corner-bl, .reticle-corner-br {
+  position: absolute !important;
+  width: 14px !important;
+  height: 14px !important;
+  border-color: var(--accent-cyan) !important;
+  pointer-events: none !important;
+  opacity: 0.75 !important;
+}
+.reticle-corner-tl { top: -1px !important; left: -1px !important; border-top: 2px solid !important; border-left: 2px solid !important; border-top-left-radius: 6px !important; }
+.reticle-corner-tr { top: -1px !important; right: -1px !important; border-top: 2px solid !important; border-right: 2px solid !important; border-top-right-radius: 6px !important; }
+.reticle-corner-bl { bottom: -1px !important; left: -1px !important; border-bottom: 2px solid !important; border-left: 2px solid !important; border-bottom-left-radius: 6px !important; }
+.reticle-corner-br { bottom: -1px !important; right: -1px !important; border-bottom: 2px solid !important; border-right: 2px solid !important; border-bottom-right-radius: 6px !important; }
+
+.reticle-top-info, .reticle-bottom-info {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9.5px !important;
+  color: var(--text-dim) !important;
+  letter-spacing: 0.14em !important;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.3) !important;
+}
+
+/* Clean View Mode: Glide side rails & panels off-screen */
+body.clean-view .lab-control-panel,
+body.clean-view .chart-card-wrapper,
+body.clean-view .terminal-box,
+body.clean-view .s1-hero-brand {
+  transform: translateX(calc(-100% - 60px)) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.clean-view .gatekeeper-col-center {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: scale(0.85) !important;
+  transition: all 0.4s ease !important;
+}
+
+body.clean-view .card-stage-wrap,
+body.clean-view .card-dossier-panel {
+  transform: translateX(calc(100% + 60px)) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.clean-view .info-briefing-panel {
+  transform: translateX(calc(100% + 60px)) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Slide 2 Fullscreen Universe Glide in Clean View */
+body.clean-view .cosmic-header-telemetry {
+  transform: translate(-50%, -120px) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.clean-view .cosmic-slider-panel,
+body.clean-view .solar-explorer-panel {
+  transform: translate(-50%, 140px) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Custom Laser Track Sliders */
+input[type="range"], .range-slider, .planet-range-slider {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 100% !important;
+  height: 5px !important;
+  background: linear-gradient(90deg, rgba(0, 240, 255, 0.45), rgba(168, 85, 247, 0.45), rgba(56, 189, 248, 0.2)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 4px !important;
+  outline: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.25) !important;
+  position: relative !important;
+}
+
+/* Laser Slider Reticle / Pointer Thumb */
+input[type="range"]::-webkit-slider-thumb,
+.range-slider::-webkit-slider-thumb,
+.planet-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, #ffffff 40%, var(--accent-cyan) 85%) !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.5), 0 0 14px var(--accent-cyan) !important;
+  cursor: grab !important;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease !important;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover,
+.range-slider::-webkit-slider-thumb:hover,
+.planet-range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.3) !important;
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.8), 0 0 20px var(--accent-cyan) !important;
+}
+
+input[type="range"]::-webkit-slider-thumb:active,
+.range-slider::-webkit-slider-thumb:active,
+.planet-range-slider::-webkit-slider-thumb:active {
+  transform: scale(1.45) !important;
+  cursor: grabbing !important;
+  box-shadow: 0 0 0 4px #ffffff, 0 0 28px var(--accent-cyan) !important;
+}
+
+input[type="range"]::-moz-range-thumb,
+.range-slider::-moz-range-thumb,
+.planet-range-slider::-moz-range-thumb {
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, #ffffff 40%, var(--accent-cyan) 85%) !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.5), 0 0 14px var(--accent-cyan) !important;
+  cursor: grab !important;
+}
+
+/* Translucent Aerospace Glass HUD for All Panels */
+.cosmic-header-telemetry {
+  position: fixed !important;
+  top: 76px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 1120px !important;
+  max-width: 95vw !important;
+  background: rgba(6, 14, 28, 0.72) !important;
+  border: 1px solid rgba(56, 189, 248, 0.2) !important;
+  border-radius: 14px !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  z-index: 40 !important;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease !important;
+}
+
+.cosmic-slider-panel, .solar-explorer-panel {
+  position: fixed !important;
+  bottom: 84px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 1120px !important;
+  max-width: 95vw !important;
+  background: rgba(6, 14, 28, 0.75) !important;
+  border: 1px solid rgba(56, 189, 248, 0.22) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  z-index: 40 !important;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease !important;
+}
+
+.terminal-box {
+  background: rgba(6, 14, 28, 0.75) !important;
+  border: 1px solid rgba(56, 189, 248, 0.22) !important;
+  border-radius: 18px !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 0 25px rgba(0, 240, 255, 0.1) !important;
+}
+
+.chart-card-wrapper {
+  background: rgba(6, 14, 28, 0.75) !important;
+  border: 1px solid rgba(56, 189, 248, 0.22) !important;
+  border-radius: 18px !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+.chart-stat-strip {
+  background: rgba(6, 14, 28, 0.6) !important;
+  border: 1px solid rgba(56, 189, 248, 0.15) !important;
+  border-radius: 10px !important;
+}
+
+.glass-preview-box {
+  background: rgba(0, 240, 255, 0.06) !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+  border-radius: 14px !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Sleek Floating Header & Docked Switchboard Footer */
+.top-header, .lab-header {
+  height: 64px !important;
+  padding: 0 24px !important;
+  background: rgba(6, 14, 28, 0.75) !important;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.18) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  z-index: 50 !important;
+}
+
+.cockpit-footer, .lab-footer {
+  height: 72px !important;
+  padding: 0 24px !important;
+  background: rgba(6, 14, 28, 0.75) !important;
+  border-top: 1px solid rgba(56, 189, 248, 0.18) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  z-index: 50 !important;
+}
+
+/* Slide Pills in Footer Switchboard */
+.slide-pill {
+  background: rgba(15, 23, 42, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
+  padding: 7px 12px !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  color: #94a3b8 !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  position: relative !important;
+  white-space: nowrap !important;
+}
+
+.slide-pill:hover {
+  background: rgba(0, 240, 255, 0.08) !important;
+  border-color: rgba(0, 240, 255, 0.3) !important;
+  color: #ffffff !important;
+  transform: translateY(-2px) !important;
+}
+
+.slide-pill.active {
+  background: rgba(0, 240, 255, 0.16) !important;
+  border-color: var(--accent-cyan) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.28) !important;
+}
+
+.slide-pill.active::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: -1px !important;
+  left: 10px !important;
+  right: 10px !important;
+  height: 2px !important;
+  background: var(--accent-cyan) !important;
+  box-shadow: 0 0 8px var(--accent-cyan) !important;
+  border-radius: 2px !important;
+}
+
+/* Explicitly Remove Clean View [H] button from Slide 2 (Preserving Clean View [C] in Header) */
+.hud-toggle-pill, #btn-toggle-hud {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Slide 10: Fullscreen Relativistic Singularity Warp (Pure 3D, Zero Text, Zero Markings, NO Camera View) */
+#slide-10 {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  pointer-events: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  z-index: 10 !important;
+}
+
+#slide-10 .singularity-overlay,
+#slide-10 .centerpiece-reticle,
+#slide-10 .station-centerpiece-stage {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Hyperspace Wormhole Light Transition & Spatial Warp Flash Overlay */
+#wormhole-flash-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: #ffffff !important;
+  pointer-events: none !important;
+  z-index: 99998 !important;
+  opacity: 0;
+}
